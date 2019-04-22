@@ -1,0 +1,1 @@
+# winsw-maven-plugin
