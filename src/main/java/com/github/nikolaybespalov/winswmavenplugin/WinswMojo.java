@@ -146,18 +146,18 @@ public class WinswMojo extends AbstractMojo {
             throw new MojoExecutionException("Failed to build res file", e);
         }
 
-        File nakedExeFile;
+        File exeFile;
 
         try {
-            nakedExeFile = removeRsrcSection(downloadWinswBinArtifact());
-        } catch (IOException | InterruptedException e) {
+            exeFile = downloadWinswBinArtifact();
+        } catch (IOException e) {
             throw new MojoExecutionException("Failed to remove .rsrc section", e);
         }
 
         File resultExeFile;
 
         try {
-            resultExeFile = mergeResFileAndExeFile(nakedExeFile, resFile);
+            resultExeFile = mergeResFileAndExeFile(resFile, exeFile);
         } catch (IOException | InterruptedException e) {
             throw new MojoExecutionException("Failed to merge exe and res file", e);
         }
@@ -304,30 +304,14 @@ public class WinswMojo extends AbstractMojo {
         return path.toFile();
     }
 
-    private File removeRsrcSection(File exeFile) throws IOException, InterruptedException {
-        File objcopyFile = extractFile("objcopy");
-
-        Path path = Files.createTempFile("winsw-naked", ".exe");
-
-        getLog().debug(path.toString());
-
-        // objcopy --remove-section=.rsrc INPUT.exe OUTPUT.exe
-        executeCommand(objcopyFile.getAbsolutePath(),
-                "--remove-section=.rsrc",
-                exeFile.getAbsolutePath(),
-                path.toFile().getAbsolutePath());
-
-        return path.toFile();
-    }
-
-    private File mergeResFileAndExeFile(File exeFile, File resFile) throws IOException, InterruptedException {
+    private File mergeResFileAndExeFile(File resFile, File exeFile) throws IOException, InterruptedException {
         File ldFile = extractFile("ld");
 
         Path path = Files.createTempFile("winsw-merged", ".exe");
 
         getLog().debug(path.toString());
 
-        // ld INPUT.exe INPUT.o -o OUTPUT.exe
+        // ld INPUT.o INPUT.exe -o OUTPUT.exe
         executeCommand(ldFile.getAbsolutePath(),
                 "-mi386pe",
                 "--oformat",
@@ -336,8 +320,9 @@ public class WinswMojo extends AbstractMojo {
                 "--nxcompat",
                 "--no-seh",
                 "-s",
-                exeFile.getAbsolutePath(),
+                "--unique=.rsrc",
                 resFile.getAbsolutePath(),
+                exeFile.getAbsolutePath(),
                 "-o",
                 path.toFile().getAbsolutePath());
 

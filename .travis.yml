@@ -18,7 +18,7 @@ before_install:
       RefreshEnv.cmd
       choco install maven
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      :
+      echo "osx"
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       sudo apt-get install maven
     fi
