@@ -1,6 +1,8 @@
 os:
   - windows
 
+language: shell
+
 before_install:
   - set -e
   - |
@@ -11,4 +13,3 @@ before_install:
 
 script:
   - mvn clean verify -Prun-its
-
