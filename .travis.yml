@@ -11,20 +11,15 @@ cache:
 
 before_install:
   - set -e
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
       choco install jdk8
       export JAVA_HOME="C:/Program Files/Java/jdk1.8.0_211"
       RefreshEnv.cmd
       choco install maven
-    fi
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       :
-    fi
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      :
+    elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      sudo apt-get install maven
     fi
 
 script:
