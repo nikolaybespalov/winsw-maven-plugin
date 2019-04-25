@@ -4,9 +4,8 @@ Maven plugin for [winsw](https://github.com/kohsuke/winsw).
 
 ## Description
 WinSW is an executable binary, which can be used to wrap and manage a custom process as a Windows service.
-Once you download the installation package, you can rename `winsw.exe` to any name, e.g. `myService.exe`.
 
-The Maven plugin for WinSW lets you generate the WinSW executable and XML configuration file as part of the Maven build process.
+The Maven plugin for WinSW lets you download the WinSW executable and generate XML configuration file as part of the Maven build process.
 
 ## Adding plugin to pom.xml
 
