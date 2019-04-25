@@ -10,7 +10,7 @@ Maven plugin for [winsw](https://github.com/kohsuke/winsw).
     <executions>
         <execution>
             <id>process-winsw-stuff</id>
-            <phase>validate</phase>
+            <phase>prepare-package</phase>
             <goals>
                 <goal>winsw</goal>
             </goals>
