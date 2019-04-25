@@ -1,8 +1,8 @@
 # Winsw Maven Plugin
 
-Maven plugin for [winsw](https://github.com/kohsuke/winsw).
-
 [![Build Status](https://travis-ci.org/nikolaybespalov/winsw-maven-plugin.svg?branch=master)](https://travis-ci.org/nikolaybespalov/winsw-maven-plugin)
+
+Maven plugin for [winsw](https://github.com/kohsuke/winsw).
 
 ## Description
 WinSW is an executable binary, which can be used to wrap and manage a custom process as a Windows service.
