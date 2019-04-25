@@ -1,5 +1,7 @@
 package com.github.nikolaybespalov.winswmavenplugin.rc;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -107,7 +109,7 @@ public class RcFileWriter {
             return;
         }
 
-        writer.append("1 ICON DISCARDABLE ").append("\"").append(rcFile.getIcon()).append("\"");
+        writer.append("1 ICON DISCARDABLE ").append("\"").append(FilenameUtils.separatorsToUnix(rcFile.getIcon())).append("\"");
     }
 
     private String prepareVersion(String version) {

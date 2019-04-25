@@ -27,6 +27,7 @@ Maven plugin for [winsw](https://github.com/kohsuke/winsw).
                     <arguments>-jar ${build.finalName}.jar</arguments>
                 </configurationFile>
                 <rcFile>
+                    <icon>${project.basedir}/${{project.name}.ico</icon>
                     <fileInfo>
                         <fileVersion>${project.version}</fileVersion>
                         <productVersion>${project.version}</productVersion>

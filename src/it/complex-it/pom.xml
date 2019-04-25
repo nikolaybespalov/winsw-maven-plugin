@@ -45,6 +45,7 @@
                                 <arguments>-jar ${build.finalName}.jar</arguments>
                             </configurationFile>
                             <rcFile>
+                                <icon>${project.basedir}/java.ico</icon>
                                 <fileInfo>
                                     <fileVersion>${project.version}</fileVersion>
                                     <productVersion>${project.version}</productVersion>
