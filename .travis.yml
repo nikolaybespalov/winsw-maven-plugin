@@ -17,7 +17,7 @@ before_install:
       RefreshEnv.cmd
       choco install maven
     fi
-    |
+  - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew tap caskroom/versions
       brew cask install java8
