@@ -11,3 +11,4 @@ before_install:
 
 script:
   - mvn clean verify -Prun-its
+
