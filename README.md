@@ -33,13 +33,7 @@ Maven plugin for [winsw](https://github.com/kohsuke/winsw).
                         <productVersion>${project.version}</productVersion>
                         <comments>${project.description}</comments>
                         <companyName>${organization.name}</companyName>
-                        <fileDescription>${project.description}</fileDescription>
-                        <txtFileVersion>${project.version}</txtFileVersion>
-                        <internalName>${project.name}</internalName>
                         <copyright>© ${inceptionYear} ${organization.name} All Rights Reserved</copyright>
-                        <originalFilename>${project.build.finalName}.exe</originalFilename>
-                        <productName>${project.name}</productName>
-                        <txtProductVersion>${project.version}</txtProductVersion>
                     </fileInfo>
                 </rcFile>
             </configuration>
