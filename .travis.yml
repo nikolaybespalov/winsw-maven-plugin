@@ -1,5 +1,6 @@
 os:
   - windows
+  - osx
 
 language: shell
 
@@ -15,6 +16,12 @@ before_install:
       export JAVA_HOME="C:/Program Files/Java/jdk1.8.0_211"
       RefreshEnv.cmd
       choco install maven
+    fi
+    |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew tap caskroom/versions
+      brew cask install java8
+      brew install maven
     fi
 
 script:
