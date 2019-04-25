@@ -23,5 +23,4 @@ before_install:
     fi
 
 script:
-  - mvn -X clean verify -Prun-its
-  - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/coverage-reports/jacoco/jacoco.xml
+  - mvn -X clean verify -Prun-its -Pupload-coverage-report
