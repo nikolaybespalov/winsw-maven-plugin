@@ -1,6 +1,8 @@
 # Winsw Maven Plugin
 
-[![Build Status](https://travis-ci.org/nikolaybespalov/winsw-maven-plugin.svg?branch=master)](https://travis-ci.org/nikolaybespalov/winsw-maven-plugin)
+![Build Status](https://img.shields.io/travis/nikolaybespalov/winsw-maven-plugin.svg)
+![Coverage](https://img.shields.io/codacy/coverage/bd1c44ba93be430cba9cfe1c20c4e179.svg)
+![Maven](https://img.shields.io/maven-central/v/com.github.nikolaybespalov/winsw-maven-plugin.svg)
 
 Maven plugin for [winsw](https://github.com/kohsuke/winsw).
 
