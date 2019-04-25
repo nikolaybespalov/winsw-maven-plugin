@@ -3,12 +3,16 @@ os:
 
 language: shell
 
+cache:
+  directories:
+    - $HOME/.m2
+
 before_install:
   - set -e
   - |
     if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      choco install jdk8 --verison 8.0.211 -params "source=false"
-      choco install maven --version 3.5.0
+      choco install jdk8
+      choco install maven
     fi
 
 script:
