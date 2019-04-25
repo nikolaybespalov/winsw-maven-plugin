@@ -7,7 +7,7 @@
 
     <groupId>com.github.nikolaybespalov</groupId>
     <artifactId>winsw-maven-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>winsw-maven-plugin Maven Plugin</name>
