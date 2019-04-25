@@ -118,11 +118,11 @@ public class RcFileWriter {
 
     private String complementVersion(String version) {
         StringBuilder versionBuilder = new StringBuilder(version);
+
         while (versionBuilder.chars().filter(ch -> ch == ',').count() < 3) {
             versionBuilder.append(", 0");
         }
-        version = versionBuilder.toString();
 
-        return version;
+        return versionBuilder.toString();
     }
 }
