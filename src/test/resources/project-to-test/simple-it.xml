@@ -1,0 +1,6 @@
+<configuration>
+    <id>${project.artifactId}</id>
+    <name>${project.name}</name>
+    <description>${project.description}</description>
+    <executable>%BASE%\${project.name}.cmd</executable>
+</configuration>
