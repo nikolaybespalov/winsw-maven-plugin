@@ -12,7 +12,9 @@ before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
       choco install jdk8
+      echo $JAVA_HOME
       RefreshEnv.cmd
+      echo $JAVA_HOME
       choco install maven
     fi
 
