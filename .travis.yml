@@ -20,9 +20,11 @@ before_install:
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo "osx";
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install openjdk-8-jdk;
+      sudo add-apt-repository ppa:webupd8team/java
+      sudo apt-get update
+      sudo apt-get install oracle-java8-installer
       sudo apt-get install maven;
     fi
 
 script:
-  - mvn clean verify -Prun-its #-Pupload-coverage-report
+  - mvn clean package #verify -Prun-its #-Pupload-coverage-report
