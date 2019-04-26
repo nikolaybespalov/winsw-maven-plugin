@@ -1,6 +1,7 @@
 package com.github.nikolaybespalov.winswmavenplugin.rc;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -119,7 +120,7 @@ public class RcFileWriter {
     private String complementVersion(String version) {
         StringBuilder versionBuilder = new StringBuilder(version);
 
-        while (versionBuilder.chars().filter(ch -> ch == ',').count() < 3) {
+        while (StringUtils.countMatches(versionBuilder, ',') < 3) {
             versionBuilder.append(", 0");
         }
 
