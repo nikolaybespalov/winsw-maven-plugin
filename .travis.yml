@@ -1,7 +1,5 @@
 os:
   - windows
-  - osx
-  - linux
 
 language: shell
 
@@ -11,17 +9,13 @@ cache:
 
 before_install:
   - set -e
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      choco install jdk8;
-      export JAVA_HOME="C:/Program Files/Java/jdk1.8.0_211";
-      RefreshEnv.cmd;
-      choco install maven;
-    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      echo "osx";
-    elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install openjdk-8-jdk;
-      sudo apt-get install maven;
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      choco install jdk8
+      export JAVA_HOME="C:/Program Files/Java/jdk1.8.0_211"
+      RefreshEnv.cmd
+      choco install maven
     fi
 
 script:
-  - mvn clean verify -Prun-its #-Pupload-coverage-report
+  - mvn clean verify -Prun-its
