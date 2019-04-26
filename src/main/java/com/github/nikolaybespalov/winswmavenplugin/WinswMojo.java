@@ -66,7 +66,7 @@ public class WinswMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
-        File tmp = new File(outputDirectory, "tmp");
+        File tmp = new File(System.getProperty("java.io.tmpdir"));
 
         if (!tmp.exists()) {
             tmp.mkdirs();
