@@ -66,6 +66,7 @@ public class WinswMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
+        // Linux /tmp workaround
         File tmp = new File(System.getProperty("java.io.tmpdir"));
 
         if (!tmp.exists()) {
@@ -228,7 +229,7 @@ public class WinswMojo extends AbstractMojo {
         } else if (SystemUtils.IS_OS_MAC_OSX) {
             resourceName += "/macosx-x86/" + name;
         } else if (SystemUtils.IS_OS_LINUX) {
-            resourceName += "/linux-x86/" + name;
+            resourceName += "/linux-x86-64/" + name;
         } else {
             throw new IOException("Unsupported platform");
         }
