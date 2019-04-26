@@ -66,13 +66,6 @@ public class WinswMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
-        // Linux /tmp workaround
-        File tmp = new File(System.getProperty("java.io.tmpdir"));
-
-        if (!tmp.exists()) {
-            tmp.mkdirs();
-        }
-
         processConfigurationFile();
 
         processExeFile();
