@@ -234,8 +234,11 @@ public class WinswMojo extends AbstractMojo {
                 throw new IOException("Failed to getResourceAsStream for " + resourceName);
             }
 
-            Path path = Files.createTempFile(name, ".exe",
-                    PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwxr-xr-x")));
+            Path path = Files.createTempFile(name, ".exe");
+
+            if (!SystemUtils.IS_OS_WINDOWS) {
+                Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rwxr-xr-x"));
+            }
 
             getLog().debug(path.toString());
 
