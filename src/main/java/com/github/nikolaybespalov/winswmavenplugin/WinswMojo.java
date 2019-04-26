@@ -26,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Arrays;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
@@ -238,6 +239,8 @@ public class WinswMojo extends AbstractMojo {
             Path path = Files.createTempFile(name, ".exe",
                     PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwxr-xr-x")));
 
+            getLog().debug(path.toString());
+
             FileUtils.copyInputStreamToFile(is, path.toFile());
 
             return path.toFile();
@@ -339,7 +342,9 @@ public class WinswMojo extends AbstractMojo {
         return path.toFile();
     }
 
-    private static void executeCommand(String... args) throws IOException, InterruptedException {
+    private void executeCommand(String... args) throws IOException, InterruptedException {
+        getLog().debug(Arrays.toString(args));
+
         ProcessBuilder pb = new ProcessBuilder(args);
 
         pb.redirectErrorStream(true);
