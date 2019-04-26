@@ -329,6 +329,7 @@
                                 <goal>clean</goal>
                                 <goal>test-compile</goal>
                             </goals>
+                            <mavenOpts>-Djava.io.tmpdir=${project.build.directory}/tmp</mavenOpts>
                         </configuration>
                         <executions>
                             <execution>

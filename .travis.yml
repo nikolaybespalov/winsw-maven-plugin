@@ -27,4 +27,4 @@ before_install:
     fi
 
 script:
-  - mvn verify -Prun-its -Djava.io.tmpdir="$TRAVIS_BUILD_DIR/target/tmp" #-Pupload-coverage-report
+  - mvn verify -Prun-its #-Pupload-coverage-report
