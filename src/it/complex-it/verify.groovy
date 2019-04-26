@@ -3,6 +3,7 @@ import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.Version
 import com.sun.jna.ptr.IntByReference
 import com.sun.jna.ptr.PointerByReference
+import org.apache.commons.lang3.SystemUtils
 import org.dom4j.Document
 import org.dom4j.io.SAXReader
 
@@ -12,16 +13,18 @@ File executableFile = new File(basedir, 'target/complex-it-1.0-SNAPSHOT.exe')
 
 assert executableFile.exists()
 
-assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'Comments')
-assert 'complex-it' == getFileInfoValue(executableFile, 'InternalName')
-assert 'complex-it' == getFileInfoValue(executableFile, 'ProductName')
-assert 'Nikolay Bespalov' == getFileInfoValue(executableFile, 'CompanyName')
-assert '© 2019 Nikolay Bespalov All Rights Reserved' == getFileInfoValue(executableFile, 'LegalCopyright')
-assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'ProductVersion')
-assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'FileDescription')
-assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
-assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
-assert 'complex-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+if (SystemUtils.IS_OS_WINDOWS) {
+    assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'Comments')
+    assert 'complex-it' == getFileInfoValue(executableFile, 'InternalName')
+    assert 'complex-it' == getFileInfoValue(executableFile, 'ProductName')
+    assert 'Nikolay Bespalov' == getFileInfoValue(executableFile, 'CompanyName')
+    assert '© 2019 Nikolay Bespalov All Rights Reserved' == getFileInfoValue(executableFile, 'LegalCopyright')
+    assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'ProductVersion')
+    assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'FileDescription')
+    assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
+    assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
+    assert 'complex-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+}
 
 File configurationFile = new File(basedir, 'target/complex-it-1.0-SNAPSHOT.xml')
 
