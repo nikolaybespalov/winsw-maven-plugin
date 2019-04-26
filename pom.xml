@@ -323,6 +323,8 @@
                             <postBuildHookScript>verify</postBuildHookScript>
                             <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
                             <settingsFile>src/it/settings.xml</settingsFile>
+                            <debug>true</debug>
+                            <streamLogs>true</streamLogs>
                             <goals>
                                 <goal>clean</goal>
                                 <goal>test-compile</goal>
