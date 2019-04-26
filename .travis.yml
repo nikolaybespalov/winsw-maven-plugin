@@ -28,3 +28,4 @@ before_install:
 
 script:
   - mvn -X verify -Prun-its #-Pupload-coverage-report
+  - less "./target/it/complex-it/build.log"
