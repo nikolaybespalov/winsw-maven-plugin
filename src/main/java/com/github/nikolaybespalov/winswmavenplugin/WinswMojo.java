@@ -225,6 +225,8 @@ public class WinswMojo extends AbstractMojo {
             throw new IOException("Unsupported platform");
         }
 
+        getLog().debug("Extraction " + resourceName);
+
         try (InputStream is = getClass().getResourceAsStream(resourceName)) {
             if (is == null) {
                 throw new IOException("Failed to getResourceAsStream for " + resourceName);
@@ -233,6 +235,8 @@ public class WinswMojo extends AbstractMojo {
             Path path = Files.createTempFile(name, ".exe");
 
             FileUtils.copyInputStreamToFile(is, path.toFile());
+
+            getLog().debug("Set executable " + path + " " + path.toFile().setExecutable(true));
 
             return path.toFile();
         }
