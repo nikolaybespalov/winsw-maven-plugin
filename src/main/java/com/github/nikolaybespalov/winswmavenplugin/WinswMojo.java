@@ -334,14 +334,6 @@ public class WinswMojo extends AbstractMojo {
 
         // ld INPUT.o INPUT.exe -o OUTPUT.exe
         executeCommand(ldFile.getAbsolutePath(),
-                "-mi386pe",
-                "--oformat",
-                "pei-i386",
-                "--dynamicbase",
-                "--nxcompat",
-                "--no-seh",
-                "-s",
-                "--unique=.rsrc",
                 resFile.getAbsolutePath(),
                 exeFile.getAbsolutePath(),
                 "-o",
