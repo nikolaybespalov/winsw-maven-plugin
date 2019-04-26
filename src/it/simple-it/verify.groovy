@@ -3,6 +3,7 @@ import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.Version
 import com.sun.jna.ptr.IntByReference
 import com.sun.jna.ptr.PointerByReference
+import org.apache.commons.lang3.SystemUtils
 import org.dom4j.Document
 import org.dom4j.io.SAXReader
 
@@ -12,16 +13,18 @@ File executableFile = new File(basedir, 'target/simple-it-1.0-SNAPSHOT.exe')
 
 assert executableFile.exists()
 
-assert null == getFileInfoValue(executableFile, 'Comments')
-assert 'simple-it' == getFileInfoValue(executableFile, 'InternalName')
-assert 'simple-it' == getFileInfoValue(executableFile, 'ProductName')
-assert null == getFileInfoValue(executableFile, 'CompanyName')
-assert null == getFileInfoValue(executableFile, 'LegalCopyright')
-assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'ProductVersion')
-assert null == getFileInfoValue(executableFile, 'FileDescription')
-assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
-assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
-assert 'simple-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+if (SystemUtils.IS_OS_WINDOWS) {
+    assert null == getFileInfoValue(executableFile, 'Comments')
+    assert 'simple-it' == getFileInfoValue(executableFile, 'InternalName')
+    assert 'simple-it' == getFileInfoValue(executableFile, 'ProductName')
+    assert null == getFileInfoValue(executableFile, 'CompanyName')
+    assert null == getFileInfoValue(executableFile, 'LegalCopyright')
+    assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'ProductVersion')
+    assert null == getFileInfoValue(executableFile, 'FileDescription')
+    assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
+    assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
+    assert 'simple-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+}
 
 File configurationFile = new File(basedir, 'target/simple-it-1.0-SNAPSHOT.xml')
 
