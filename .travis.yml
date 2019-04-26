@@ -27,5 +27,4 @@ before_install:
     fi
 
 script:
-  - mvn -X verify -Prun-its #-Pupload-coverage-report
-  - less "./target/it/complex-it/build.log"
+  - mvn -X -Dinvoker.debug=true verify -Prun-its #-Pupload-coverage-report
