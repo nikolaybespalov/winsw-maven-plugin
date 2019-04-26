@@ -1,14 +1,11 @@
+language: shell
+
 os:
   - windows
   - osx
   - linux
 
-matrix:
-  include:
-    - os: linux
-      dist: xenial
-
-language: shell
+dist: trusty
 
 cache:
   directories:
