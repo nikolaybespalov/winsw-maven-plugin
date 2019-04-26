@@ -23,6 +23,9 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
@@ -232,11 +235,10 @@ public class WinswMojo extends AbstractMojo {
                 throw new IOException("Failed to getResourceAsStream for " + resourceName);
             }
 
-            Path path = Files.createTempFile(name, ".exe");
+            Path path = Files.createTempFile(name, ".exe",
+                    PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwxr-xr-x")));
 
             FileUtils.copyInputStreamToFile(is, path.toFile());
-
-            getLog().debug("Set executable " + path + " " + path.toFile().setExecutable(true));
 
             return path.toFile();
         }
