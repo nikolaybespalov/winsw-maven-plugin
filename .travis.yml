@@ -20,7 +20,8 @@ before_install:
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo "osx";
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install default-jdk;
+      sudo apt update
+      sudo apt install openjdk-8-jdk
       sudo apt-get install maven;
     fi
 
