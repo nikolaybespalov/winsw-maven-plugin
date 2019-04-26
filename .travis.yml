@@ -27,4 +27,4 @@ before_install:
     fi
 
 script:
-  - mvn verify -Prun-its #-Pupload-coverage-report
+  - mvn -X verify -Prun-its #-Pupload-coverage-report
