@@ -66,6 +66,12 @@ public class WinswMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
+        File tmp = new File(outputDirectory, "tmp");
+
+        if (!tmp.exists()) {
+            tmp.mkdirs();
+        }
+
         processConfigurationFile();
 
         processExeFile();
