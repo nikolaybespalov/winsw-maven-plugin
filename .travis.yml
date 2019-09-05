@@ -23,6 +23,7 @@ before_install:
       export M2=$M2_HOME/bin
       export PATH=$PATH:$M2
       RefreshEnv.cmd;
+      refreshenv
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo "osx";
     elif [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
