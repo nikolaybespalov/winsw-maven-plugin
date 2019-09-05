@@ -31,39 +31,54 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 @Mojo(name = "winsw", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 public class WinswMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", readonly = true)
+    @SuppressWarnings("unused")
     private MavenProject mavenProject;
 
     @Parameter(defaultValue = "${session}", readonly = true)
+    @SuppressWarnings("unused")
     private MavenSession mavenSession;
 
     @Component
+    @SuppressWarnings("unused")
     private BuildPluginManager pluginManager;
 
     @Parameter(defaultValue = "${project.build.directory}", required = true)
+    @SuppressWarnings("unused")
     private File outputDirectory;
 
     @Parameter(defaultValue = "2.2.0")
+    @SuppressWarnings("unused")
     private String winswVersion;
 
     @Parameter(defaultValue = "${project.build.finalName}.exe")
+    @SuppressWarnings("unused")
     private String executableFileName;
 
+    @Parameter
+    @SuppressWarnings("unused")
+    private File executableFile;
+
     @Parameter(defaultValue = "${project.build.finalName}.xml")
+    @SuppressWarnings("unused")
     private String configurationFileName;
 
     @Parameter
+    @SuppressWarnings("unused")
     private File configurationFilePath;
 
     @Parameter
     private ConfigurationFile configurationFile;
 
     @Parameter
+    @SuppressWarnings("unused")
     private RcFile rcFile;
 
     @Override
     public void execute() throws MojoExecutionException {
         if (!outputDirectory.exists()) {
-            outputDirectory.mkdirs();
+            if (!outputDirectory.mkdirs()) {
+                throw new MojoExecutionException("Could not create " + outputDirectory);
+            }
         }
 
         processConfigurationFile();
@@ -114,24 +129,25 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private void copyConfigurationFile() throws MojoExecutionException {
-        getLog().debug("Copying configuration file " + configurationFilePath);
-
-        if (!configurationFilePath.exists()) {
-            throw new MojoExecutionException("File not found " + configurationFilePath);
-        }
-
-        File outputConfigurationFile = new File(outputDirectory, configurationFileName);
-
-        if (!outputConfigurationFile.exists()) {
-            try {
-                FileUtils.copyFile(configurationFilePath, outputConfigurationFile);
-            } catch (IOException e) {
-                throw new MojoExecutionException("Failed to copy file " + configurationFilePath, e);
-            }
-        }
+        copyFileToOutputDirectory(configurationFilePath, configurationFileName);
     }
 
     private void processExeFile() throws MojoExecutionException {
+        File exeFile;
+        File resultExeFile;
+
+        if (executableFile != null) {
+            exeFile = copyExecutableFile();
+        } else {
+            try {
+                exeFile = downloadWinswBinArtifact();
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to download winsw.exe", e);
+            }
+        }
+
+        resultExeFile = exeFile;
+
         File rcFile;
 
         try {
@@ -140,42 +156,46 @@ public class WinswMojo extends AbstractMojo {
             throw new MojoExecutionException("Failed to write rc file", e);
         }
 
-        File resFile;
+        if (rcFile != null) {
+            File resFile;
 
-        try {
-            resFile = buildResFile(rcFile);
-        } catch (IOException | InterruptedException e) {
-            throw new MojoExecutionException("Failed to build res file", e);
-        }
+            try {
+                resFile = buildResFile(rcFile);
+            } catch (IOException | InterruptedException e) {
+                throw new MojoExecutionException("Failed to build res file", e);
+            }
 
-        File exeFile;
+            try {
+                resultExeFile = mergeResFileAndExeFile(resFile, exeFile);
+            } catch (IOException | InterruptedException e) {
+                throw new MojoExecutionException("Failed to merge exe and res file", e);
+            }
 
-        try {
-            exeFile = downloadWinswBinArtifact();
-        } catch (IOException e) {
-            throw new MojoExecutionException("Failed to remove .rsrc section", e);
-        }
-
-        File resultExeFile;
-
-        try {
-            resultExeFile = mergeResFileAndExeFile(resFile, exeFile);
-        } catch (IOException | InterruptedException e) {
-            throw new MojoExecutionException("Failed to merge exe and res file", e);
+            getLog().info("The file " + resultExeFile + " was successfully processed.");
         }
 
         File destExeFile = new File(outputDirectory, executableFileName);
 
-        try {
-            FileUtils.copyFile(resultExeFile, destExeFile);
-        } catch (IOException e) {
-            throw new MojoExecutionException("Failed to copy exe res file", e);
-        }
+        if (!resultExeFile.equals(destExeFile)) {
+            try {
+                getLog().debug("Copying result exe file");
 
-        getLog().info("The file " + destExeFile + " was successfully created.");
+                getLog().debug(destExeFile.toString());
+
+                FileUtils.copyFile(resultExeFile, destExeFile);
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to copy exe file", e);
+            }
+        }
+    }
+
+    private File copyExecutableFile() throws MojoExecutionException {
+        return copyFileToOutputDirectory(executableFile, executableFileName);
     }
 
     private File downloadWinswBinArtifact() throws IOException, MojoExecutionException {
+        getLog().debug("Downloading winsw.exe file");
+
         Path path = Files.createTempFile("winsw", ".exe");
 
         getLog().debug(path.toString());
@@ -249,12 +269,14 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private File writeRcFile() throws IOException {
+        getLog().debug("Writing rc file");
+
         Path path = Files.createTempFile("winsw", ".rc");
 
         getLog().debug(path.toString());
 
         if (rcFile == null) {
-            rcFile = new RcFile();
+            return null;
         }
 
         if (rcFile.getFileInfo() == null) {
@@ -299,6 +321,8 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private File buildResFile(File rcFile) throws IOException, InterruptedException {
+        getLog().debug("Making res file");
+
         File windresFile = extractFile("windres");
 
         Path path = Files.createTempFile("winsw", ".o");
@@ -319,6 +343,8 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private File mergeResFileAndExeFile(File resFile, File exeFile) throws IOException, InterruptedException {
+        getLog().debug("Merging res and exe files");
+
         File ldFile = extractFile("ld");
 
         Path path = Files.createTempFile("winsw-merged", ".exe");
@@ -362,5 +388,25 @@ public class WinswMojo extends AbstractMojo {
         if (exitCode != 0) {
             throw new IOException(output);
         }
+    }
+
+    private File copyFileToOutputDirectory(File filePath, String fileName) throws MojoExecutionException {
+        getLog().debug("Copying file " + filePath);
+
+        if (!filePath.exists()) {
+            throw new MojoExecutionException("File not found " + filePath);
+        }
+
+        File outputFile = new File(outputDirectory, fileName);
+
+        if (!outputFile.exists()) {
+            try {
+                FileUtils.copyFile(filePath, outputFile);
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to copy file " + filePath, e);
+            }
+        }
+
+        return outputFile;
     }
 }
