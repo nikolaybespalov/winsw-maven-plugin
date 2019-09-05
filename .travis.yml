@@ -25,4 +25,4 @@ before_install:
     fi
 
 script:
-  - ./mvnw verify -Prun-its
+  - ./mvnw deploy -Prun-its
