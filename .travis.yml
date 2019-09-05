@@ -25,4 +25,4 @@ before_install:
     fi
 
 script:
-  - mvnw verify -Prun-its
+  - ./mvnw verify -Prun-its
