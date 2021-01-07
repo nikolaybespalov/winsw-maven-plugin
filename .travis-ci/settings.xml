@@ -1,0 +1,9 @@
+<settings>
+  <servers>
+    <server>
+      <id>ossrh</id>
+      <username>nikolaybespalov@gmail.com</username>
+      <password>@00gu$74xPfI2SIrfK2H</password> <!-- TODO: ${env.OSSRH_PASSWORD} not working!-->
+    </server>
+  </servers>
+</settings>
