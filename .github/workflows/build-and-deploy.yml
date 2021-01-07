@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup GPG
-        run: gpg --cipher-algo AES256 --passphrase ${{ secrets.GPG_PASSPHRASE }} -o .travis-ci/sec.asc -d .travis-ci/sec.asc.gpg && gpg --import .travis-ci/sec.asc && cp .travis-ci/settings.xml $HOME/.m2/settings.xml
+#      - name: Setup GPG
+#        run: gpg --cipher-algo AES256 --passphrase ${{ secrets.GPG_PASSPHRASE }} -o .travis-ci/sec.asc -d .travis-ci/sec.asc.gpg && gpg --import .travis-ci/sec.asc && cp .travis-ci/settings.xml $HOME/.m2/settings.xml
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
@@ -33,4 +33,4 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         run: |
-          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=true -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
+          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
