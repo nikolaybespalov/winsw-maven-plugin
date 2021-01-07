@@ -9,9 +9,13 @@ on:
       - '**'
 
 jobs:
-  build-on-windows:
+  build:
 
-    runs-on: windows-2019
+    strategy:
+      matrix:
+        os: [macos-10.15, windows-2019, ubuntu-18.04]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
