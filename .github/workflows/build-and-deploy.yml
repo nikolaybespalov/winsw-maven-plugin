@@ -21,8 +21,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup GPG private key
+        env:
+          PGP_ARMORED_PRIVATE_KEY: ${{ secrets.PGP_ARMORED_PRIVATE_KEY }}
         run: |
-          echo ${{ secrets.PGP_ARMORED_PRIVATE_KEY }} | gpg --import --batch
+          echo ${{ PGP_ARMORED_PRIVATE_KEY }} | gpg --import --batch
       - name: Setup Maven settings.xml file
         run: |
           mkdir -p $HOME/.m2
