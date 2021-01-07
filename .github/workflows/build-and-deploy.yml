@@ -20,21 +20,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup GPG
+      - name: Setup GPG Private Key
         run: |
+          # Decrypting the private key
           echo ${{ secrets.GPG_PASSPHRASE }} | \
             gpg --batch --yes --cipher-algo AES256 --passphrase-fd 0 \
               -o .travis-ci/sec.asc \
               -d .travis-ci/sec.asc.gpg
+          # Importing the private key
+          gpg --import .travis-ci/sec.asc
+          # Copying Maven settings.xml file that contains the Nexus credentials
+          cp .travis-ci/settings.xml $HOME/.m2/settings.xml
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-#      - name: Build with Maven
-#        env:
-#          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
-#          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-#          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-#        run: |
-#          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
+      - name: Build with Maven
+        env:
+          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: |
+          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
