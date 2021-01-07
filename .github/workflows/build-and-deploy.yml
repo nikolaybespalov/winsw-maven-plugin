@@ -26,4 +26,4 @@ jobs:
           java-version: 1.8
       - name: Build with Maven
         run: |
-          ./mvnw --batch-mode package --file pom.xml -Prun-it
+          ./mvnw --batch-mode package --file pom.xml -Prun-it -Pupload-coverage-report
