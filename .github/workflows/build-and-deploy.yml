@@ -22,9 +22,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup GPG Private Key
         run: |
-          # Importing the private key
           echo ${{ secrets.PGP_ARMORED_PRIVATE_KEY }} | gpg --dearmor | gpg --import --batch
-          # Copying Maven settings.xml file that contains the Nexus credentials
           cp .travis-ci/settings.xml $HOME/.m2/settings.xml
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
