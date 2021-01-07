@@ -28,7 +28,7 @@ jobs:
               -o .travis-ci/sec.asc \
               -d .travis-ci/sec.asc.gpg
           # Importing the private key
-          gpg --import .travis-ci/sec.asc
+          gpg --import --batch --yes .travis-ci/sec.asc
           # Copying Maven settings.xml file that contains the Nexus credentials
           cp .travis-ci/settings.xml $HOME/.m2/settings.xml
       - name: Set up JDK 1.8
