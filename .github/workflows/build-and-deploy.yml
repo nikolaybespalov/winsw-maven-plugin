@@ -21,8 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup GPG
-        run: echo ${{ secrets.GPG_PASSPHRASE }} | \
-          gpg --batch --yes --cipher-algo AES256 --passphrase-fd 0 \
+        run: echo ${{ secrets.GPG_PASSPHRASE }} | gpg --batch --yes --cipher-algo AES256 --passphrase-fd 0 \
             -o .travis-ci/sec.asc \
             -d .travis-ci/sec.asc.gpg
       - name: Set up JDK 1.8
