@@ -1,9 +1,9 @@
 # WinSW Maven Plugin
 
-![Build Status](https://github.com/nikolaybespalov/winsw-maven-plugin/workflows/.github/workflows/build-and-deploy.yml/badge.svg)
+![Build Status](https://github.com/nikolaybespalov/winsw-maven-plugin/workflows/Build%20and%20Deploy/badge.svg)
+![Maven](https://img.shields.io/maven-central/v/com.github.nikolaybespalov/winsw-maven-plugin.svg)
 ![Coverage](https://img.shields.io/codacy/coverage/bd1c44ba93be430cba9cfe1c20c4e179.svg)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/568936682652455b8874b47af2fd6fde)](https://www.codacy.com/gh/nikolaybespalov/winsw-maven-plugin/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikolaybespalov/winsw-maven-plugin&amp;utm_campaign=Badge_Grade)
-![Maven](https://img.shields.io/maven-central/v/com.github.nikolaybespalov/winsw-maven-plugin.svg)
 
 Maven plugin for [winsw](https://github.com/kohsuke/winsw).
 
@@ -27,7 +27,7 @@ The format of this configuration is very similar to the standard WinSW XML forma
     </configurationFile>
 ```
 
-WinSW plugin also provides the ability to modify file information and add icon.
+WinSW plugin also provides the ability to modify file information and add an icon.
 
 ```xml
     <rcFile>
@@ -44,7 +44,7 @@ WinSW plugin also provides the ability to modify file information and add icon.
 
 ## Example
 
-As an example you can use the following
+As an example, you can use the following
 
 ```xml
     <plugin>
