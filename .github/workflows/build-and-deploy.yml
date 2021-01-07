@@ -28,5 +28,7 @@ jobs:
         env:
           CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         run: |
-          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
+          mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=true -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report deploy
