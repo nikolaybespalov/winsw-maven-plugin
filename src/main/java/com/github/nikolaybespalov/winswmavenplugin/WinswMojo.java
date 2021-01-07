@@ -18,6 +18,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.aether.repository.RemoteRepository;
+import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -222,7 +223,7 @@ public class WinswMojo extends AbstractMojo {
         mavenProject.getRemoteProjectRepositories().add(winswRepository);
 
         try {
-            executeMojo(
+            MojoExecutor.executeMojo(
                     plugin(
                             groupId("com.googlecode.maven-download-plugin"),
                             artifactId("download-maven-plugin"),
