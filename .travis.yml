@@ -27,4 +27,4 @@ before_install:
 script:
   - gpg --cipher-algo AES256 --passphrase $GPG_PASSPHRASE -o .travis-ci/sec.asc -d .travis-ci/sec.asc.gpg &&
     gpg --import .travis-ci/sec.asc && cp .travis-ci/settings.xml $HOME/.m2/settings.xml &&
-    mvn -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false deploy -Prun-its
+    ./mvnw -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false deploy -Prun-its
