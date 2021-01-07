@@ -403,15 +403,18 @@
             <build>
                 <plugins>
                     <plugin>
+                        <!-- https://github.com/halkeye/codacy-maven-plugin -->
                         <groupId>com.gavinmogan</groupId>
                         <artifactId>codacy-maven-plugin</artifactId>
-                        <version>1.0.3</version>
+                        <version>1.2.0</version>
                         <configuration>
                             <!--suppress UnresolvedMavenProperty -->
                             <apiToken>${env.CODACY_API_TOKEN}</apiToken>
                             <!--suppress UnresolvedMavenProperty -->
                             <projectToken>${env.CODACY_PROJECT_TOKEN}</projectToken>
                             <coverageReportFile>target/coverage-reports/jacoco/jacoco.xml</coverageReportFile>
+                            <codacyApiBaseUrl>https://api.codacy.com</codacyApiBaseUrl>
+                            <failOnMissingReportFile>false</failOnMissingReportFile>
                         </configuration>
                         <executions>
                             <execution>
