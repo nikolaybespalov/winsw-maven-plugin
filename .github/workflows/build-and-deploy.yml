@@ -29,10 +29,4 @@ jobs:
           CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
-          ./mvnw --batch-mode \
-            --file pom.xml \
-            -DskipNexusStagingDeployMojo=false \
-            -Dsurefire.useFile=false \
-            -Prun-it \
-            -Pupload-coverage-report \
-            deploy
+          ./mvnw --batch-mode --file pom.xml -DskipNexusStagingDeployMojo=false -Dsurefire.useFile=false -Prun-it -Pupload-coverage-report deploy
