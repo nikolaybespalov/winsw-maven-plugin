@@ -24,7 +24,7 @@ jobs:
         env:
           PGP_ARMORED_PRIVATE_KEY: ${{ secrets.PGP_ARMORED_PRIVATE_KEY }}
         run: |
-          echo ${{ PGP_ARMORED_PRIVATE_KEY }} | gpg --import --batch
+          echo ${{ env.PGP_ARMORED_PRIVATE_KEY }} | gpg --import --batch
       - name: Setup Maven settings.xml file
         run: |
           mkdir -p $HOME/.m2
