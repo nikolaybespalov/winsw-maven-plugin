@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-#      - name: Setup GPG
-#        run: gpg --cipher-algo AES256 --passphrase ${{ secrets.GPG_PASSPHRASE }} -o .travis-ci/sec.asc -d .travis-ci/sec.asc.gpg && gpg --import .travis-ci/sec.asc && cp .travis-ci/settings.xml $HOME/.m2/settings.xml
+      - name: Setup GPG
+        run: echo ${{ secrets.GPG_PASSPHRASE }} | gpg --batch --yes --cipher-algo AES256 --passphrase-fd 0 -o .travis-ci/sec.asc -d .travis-ci/sec.asc.gpg
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
