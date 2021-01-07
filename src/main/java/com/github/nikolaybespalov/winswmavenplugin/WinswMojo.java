@@ -439,21 +439,5 @@ public class WinswMojo extends AbstractMojo {
         } catch (IOException e) {
             throw new MojoExecutionException("Failed to move file " + outputFile, e);
         }
-
-//        if (!filePath.exists()) {
-//            throw new MojoExecutionException("File not found " + filePath);
-//        }
-//
-//        File outputFile = new File(outputDirectory, fileName);
-//
-//        if (!outputFile.exists()) {
-//            try {
-//                FileUtils.copyFile(filePath, outputFile);
-//            } catch (IOException e) {
-//                throw new MojoExecutionException("Failed to copy file " + filePath, e);
-//            }
-//        }
-//
-//        return outputFile;
     }
 }
