@@ -1,4 +1,4 @@
-# Winsw Maven Plugin
+# WinSW Maven Plugin
 
 ![Build Status](https://github.com/nikolaybespalov/winsw-maven-plugin/workflows/.github/workflows/build-and-deploy.yml/badge.svg)
 ![Coverage](https://img.shields.io/codacy/coverage/bd1c44ba93be430cba9cfe1c20c4e179.svg)
@@ -14,8 +14,8 @@ The Maven plugin for WinSW lets you download the WinSW executable and generate X
 
 ## Adding plugin to pom.xml
 
-Using the Maven plugin, you specify the Winsw configuration in your POM. 
-The format of this configuration is very similar to the standard Winsw XML format.
+Using the Maven plugin, you specify the WinSW configuration in your POM. 
+The format of this configuration is very similar to the standard WinSW XML format.
 
 ```xml
     <configurationFile>
@@ -27,7 +27,7 @@ The format of this configuration is very similar to the standard Winsw XML forma
     </configurationFile>
 ```
 
-Winsw plugin also provides the ability to modify file information and add icon.
+WinSW plugin also provides the ability to modify file information and add icon.
 
 ```xml
     <rcFile>
