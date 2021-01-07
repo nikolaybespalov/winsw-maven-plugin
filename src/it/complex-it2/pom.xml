@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.nikolaybespalov.winsw-maven-plugin.it</groupId>
+    <artifactId>complex-it2</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <description>A IT verifying the complex use case.</description>
+
+    <organization>
+        <name>Nikolay Bespalov</name>
+    </organization>
+
+    <inceptionYear>2019</inceptionYear>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>@project.groupId@</groupId>
+                <artifactId>@project.artifactId@</artifactId>
+                <version>@project.version@</version>
+                <executions>
+                    <execution>
+                        <id>process-winsw-stuff</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>winsw</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <winswVersion>2.2.0</winswVersion>
+                            <executableFileName>${project.build.finalName}.exe</executableFileName>
+                            <executableFilePath>${project.basedir}/${project.artifactId}.exe</executableFilePath>
+                            <configurationFileName>${project.build.finalName}.xml</configurationFileName>
+                            <configurationFilePath>${project.basedir}/${project.artifactId}.xml</configurationFilePath>
+                            <rcFile>
+                                <icon>${project.basedir}/java.ico</icon>
+                                <fileInfo>
+                                    <fileVersion>${project.version}</fileVersion>
+                                    <productVersion>${project.version}</productVersion>
+                                    <comments>${project.description}</comments>
+                                    <companyName>${organization.name}</companyName>
+                                    <fileDescription>${project.description}</fileDescription>
+                                    <txtFileVersion>${project.version}</txtFileVersion>
+                                    <internalName>${project.name}</internalName>
+                                    <copyright>© ${inceptionYear} ${organization.name} All Rights Reserved</copyright>
+                                    <originalFilename>${project.build.finalName}.exe</originalFilename>
+                                    <productName>${project.name}</productName>
+                                    <txtProductVersion>${project.version}</txtProductVersion>
+                                </fileInfo>
+                            </rcFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

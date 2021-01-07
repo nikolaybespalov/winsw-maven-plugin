@@ -29,6 +29,7 @@ import java.util.Arrays;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
 @Mojo(name = "winsw", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
+@SuppressWarnings("unused")
 public class WinswMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", readonly = true)
     @SuppressWarnings("unused")
@@ -56,7 +57,7 @@ public class WinswMojo extends AbstractMojo {
 
     @Parameter
     @SuppressWarnings("unused")
-    private File executableFile;
+    private File executableFilePath;
 
     @Parameter(defaultValue = "${project.build.finalName}.xml")
     @SuppressWarnings("unused")
@@ -136,7 +137,7 @@ public class WinswMojo extends AbstractMojo {
         File exeFile;
         File resultExeFile;
 
-        if (executableFile != null) {
+        if (executableFilePath != null) {
             exeFile = copyExecutableFile();
         } else {
             try {
@@ -190,7 +191,23 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private File copyExecutableFile() throws MojoExecutionException {
-        return copyFileToOutputDirectory(executableFile, executableFileName);
+        //return copyFileToOutputDirectory(executableFile, executableFileName);
+
+        if (!executableFilePath.exists()) {
+            throw new MojoExecutionException("File not found " + executableFilePath);
+        }
+
+        File outputFile = new File(outputDirectory, executableFileName);
+
+        if (!outputFile.exists()) {
+            try {
+                FileUtils.copyFile(executableFilePath, outputFile);
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to copy file " + executableFilePath, e);
+            }
+        }
+
+        return outputFile;
     }
 
     private File downloadWinswBinArtifact() throws IOException, MojoExecutionException {
@@ -390,23 +407,53 @@ public class WinswMojo extends AbstractMojo {
         }
     }
 
-    private File copyFileToOutputDirectory(File filePath, String fileName) throws MojoExecutionException {
+    private void copyFileToOutputDirectory(File filePath, String fileName) throws MojoExecutionException {
         getLog().debug("Copying file " + filePath);
 
-        if (!filePath.exists()) {
-            throw new MojoExecutionException("File not found " + filePath);
-        }
+        executeMojo(
+                plugin(
+                        groupId("org.apache.maven.plugins"),
+                        artifactId("maven-resources-plugin"),
+                        version("3.2.0")
+                ),
+                goal("copy-resources"),
+                configuration(
+                        element(name("outputDirectory"), outputDirectory.getAbsolutePath()),
+                        element(name("resources"),
+                                element("resource",
+                                        element("directory", filePath.getParent()),
+                                        element("include", filePath.getName()),
+                                        element("filtering", "true")))
+                ),
+                executionEnvironment(
+                        mavenProject,
+                        mavenSession,
+                        pluginManager
+                )
+        );
 
         File outputFile = new File(outputDirectory, fileName);
 
-        if (!outputFile.exists()) {
-            try {
-                FileUtils.copyFile(filePath, outputFile);
-            } catch (IOException e) {
-                throw new MojoExecutionException("Failed to copy file " + filePath, e);
-            }
+        try {
+            FileUtils.moveFile(new File(outputDirectory, filePath.getName()), outputFile);
+        } catch (IOException e) {
+            throw new MojoExecutionException("Failed to move file " + outputFile, e);
         }
 
-        return outputFile;
+//        if (!filePath.exists()) {
+//            throw new MojoExecutionException("File not found " + filePath);
+//        }
+//
+//        File outputFile = new File(outputDirectory, fileName);
+//
+//        if (!outputFile.exists()) {
+//            try {
+//                FileUtils.copyFile(filePath, outputFile);
+//            } catch (IOException e) {
+//                throw new MojoExecutionException("Failed to copy file " + filePath, e);
+//            }
+//        }
+//
+//        return outputFile;
     }
 }

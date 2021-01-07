@@ -60,6 +60,7 @@ As an example you can use the following
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <winswVersion>2.2.0</winswVersion>
+                    <!-- or use exists WinSW Executable File <executableFilePath>...</executableFilePath> -->
                     <executableFileName>${project.build.finalName}.exe</executableFileName>
                     <configurationFileName>${project.build.finalName}.xml</configurationFileName>
                     <configurationFile>
@@ -69,6 +70,7 @@ As an example you can use the following
                         <executable>java</executable>
                         <arguments>-jar ${build.finalName}.jar</arguments>
                     </configurationFile>
+                    <!-- or use exists WinSW Configuration File <configurationFilePath>...</configurationFilePath> -->
                     <rcFile>
                         <icon>${project.basedir}/${project.name}.ico</icon>
                         <fileInfo>
