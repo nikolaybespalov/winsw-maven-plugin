@@ -20,9 +20,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup GPG private key
-        run: |
-          echo "${{ secrets.PGP_ARMORED_PRIVATE_KEY }}" | gpg --dearmor | gpg --import --batch
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.PGP_ARMORED_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+#      - name: Setup GPG private key
+#        run: |
+#          echo "${{ secrets.PGP_ARMORED_PRIVATE_KEY }}" | gpg --dearmor | gpg --import --batch
       - name: Setup Maven settings.xml file
         run: |
           mkdir -p $HOME/.m2
