@@ -23,6 +23,8 @@ jobs:
       - name: Setup GPG Private Key
         run: |
           echo ${{ secrets.PGP_ARMORED_PRIVATE_KEY }} | gpg --dearmor | gpg --import --batch
+      - name: Setup Maven settings.xml
+        run: |
           cp .travis-ci/settings.xml $HOME/.m2/settings.xml
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
