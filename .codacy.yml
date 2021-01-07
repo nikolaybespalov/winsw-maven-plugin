@@ -1,6 +1,6 @@
 exclude_paths:
   - '**/test/**'
   - '**/it/**'
-  - '**/*.xml'
-  - '**/*.yml'
+  - '*.xml'
+  - '*.yml'
   - 'README.md'
