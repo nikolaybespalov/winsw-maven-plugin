@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup GPG private key
         run: |
-          echo "${{ secrets.PGP_ARMORED_PRIVATE_KEY }}" | gpg --import --batch
+          echo "${{ secrets.PGP_ARMORED_PRIVATE_KEY }}" | gpg --dearmor | gpg --import --batch
       - name: Setup Maven settings.xml file
         run: |
           mkdir -p $HOME/.m2
