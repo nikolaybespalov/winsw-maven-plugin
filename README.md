@@ -62,6 +62,7 @@ As an example, you can use the following
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <winswVersion>2.2.0</winswVersion>
+                    <!-- you can also provide a classifier for net4 and other builds, default is bin <winswClassifier>net4</winswClassifier> -->
                     <!-- or use exists WinSW Executable File <executableFilePath>...</executableFilePath> -->
                     <executableFileName>${project.build.finalName}.exe</executableFileName>
                     <configurationFileName>${project.build.finalName}.xml</configurationFileName>
