@@ -52,6 +52,10 @@ public class WinswMojo extends AbstractMojo {
     @SuppressWarnings("unused")
     private String winswVersion;
 
+    @Parameter(defaultValue = "bin")
+    @SuppressWarnings("unused")
+    private String winswClassifier;
+
     @Parameter(defaultValue = "${project.build.finalName}.exe")
     @SuppressWarnings("unused")
     private String executableFileName;
@@ -235,7 +239,7 @@ public class WinswMojo extends AbstractMojo {
                             element(name("artifactId"), "winsw"),
                             element(name("version"), winswVersion),
                             element(name("type"), "exe"),
-                            element(name("classifier"), "bin"),
+                            element(name("classifier"), winswClassifier),
                             element(name("outputDirectory"), path.toFile().getParentFile().getAbsolutePath()),
                             element(name("outputFileName"), path.toFile().getName())
                     ),
