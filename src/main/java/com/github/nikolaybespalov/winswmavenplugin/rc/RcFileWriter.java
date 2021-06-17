@@ -54,46 +54,62 @@ public class RcFileWriter {
         writer.append("\n");
         writer.append("    BEGIN");
         writer.append("\n");
+
         if (fi.getComments() != null) {
             writer.append("      VALUE ").append("\"Comments\", ").append("\"").append(fi.getComments()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getCompanyName() != null) {
             writer.append("      VALUE ").append("\"CompanyName\", ").append("\"").append(fi.getCompanyName()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getFileDescription() != null) {
             writer.append("      VALUE ").append("\"FileDescription\", ").append("\"").append(fi.getFileDescription()).append("\"");
             writer.append("\n");
         }
-        writer.append("      VALUE ").append("\"FileVersion\", ").append("\"").append(fi.getTxtFileVersion()).append("\"");
-        writer.append("\n");
+
+        if (fi.getTxtFileVersion() != null) {
+            writer.append("      VALUE ").append("\"FileVersion\", ").append("\"").append(fi.getTxtFileVersion()).append("\"");
+            writer.append("\n");
+        }
+
         if (fi.getInternalName() != null) {
             writer.append("      VALUE ").append("\"InternalName\", ").append("\"").append(fi.getInternalName()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getCopyright() != null) {
             writer.append("      VALUE ").append("\"LegalCopyright\", ").append("\"").append(fi.getCopyright()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getTrademarks() != null) {
             writer.append("      VALUE ").append("\"LegalTrademarks\", ").append("\"").append(fi.getTrademarks()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getOriginalFilename() != null) {
             writer.append("      VALUE ").append("\"OriginalFilename\", ").append("\"").append(fi.getOriginalFilename()).append("\"");
             writer.append("\n");
         }
+
         if (fi.getProductName() != null) {
             writer.append("      VALUE ").append("\"ProductName\", ").append("\"").append(fi.getProductName()).append("\"");
             writer.append("\n");
         }
-        writer.append("      VALUE ").append("\"ProductVersion\", ").append("\"").append(fi.getTxtProductVersion()).append("\"");
-        writer.append("\n");
+
+        if (fi.getProductName() != null) {
+            writer.append("      VALUE ").append("\"ProductVersion\", ").append("\"").append(fi.getTxtProductVersion()).append("\"");
+            writer.append("\n");
+        }
+
         writer.append("    END");
         writer.append("\n");
         writer.append("  END");
         writer.append("\n");
+
         writer.append("  BLOCK ").append("\"VarFileInfo\"");
         writer.append("\n");
         writer.append("  BEGIN");
