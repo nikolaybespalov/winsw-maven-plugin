@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class ConfigurationFileWriter {
-    private ConfigurationFile configurationFile;
+    private final ConfigurationFile configurationFile;
 
     public ConfigurationFileWriter(ConfigurationFile configurationFile) {
         this.configurationFile = configurationFile;

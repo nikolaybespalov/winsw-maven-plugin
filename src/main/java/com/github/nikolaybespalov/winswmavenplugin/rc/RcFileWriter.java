@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class RcFileWriter {
-    private RcFile rcFile;
+    private final RcFile rcFile;
 
     public RcFileWriter(RcFile rcFile) {
         this.rcFile = rcFile;
