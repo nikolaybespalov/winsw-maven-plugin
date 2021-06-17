@@ -1,6 +1,5 @@
 package com.github.nikolaybespalov.winswmavenplugin.rc;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -67,7 +66,8 @@ public class RcFileWriterTest {
                 "    VALUE \"Translation\", 0x0, 0x04b0\n" +
                 "  END\n" +
                 "END\n" +
-                "\n", stringWriter.toString());
+                "\n" +
+                "1 ICON DISCARDABLE \"java.ico\"", stringWriter.toString());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class RcFileWriterTest {
         RcFile rcFile = new RcFile();
         FileInfo fileInfo;
         rcFile.setFileInfo(fileInfo = new FileInfo());
-        fileInfo.setFileVersion("1.2.3.4");
-        fileInfo.setProductVersion("5.6.7.8");
+        fileInfo.setFileVersion("1.2");
+        fileInfo.setProductVersion("5.6");
 
         RcFileWriter rcFileWriter = new RcFileWriter(rcFile);
 
@@ -88,8 +88,8 @@ public class RcFileWriterTest {
                 "LANGUAGE 0, 0\n" +
                 "\n" +
                 "1 VERSIONINFO\n" +
-                " FILEVERSION 1, 2, 3, 4\n" +
-                " PRODUCTVERSION 5, 6, 7, 8\n" +
+                " FILEVERSION 1, 2, 0, 0\n" +
+                " PRODUCTVERSION 5, 6, 0, 0\n" +
                 " FILEFLAGSMASK 0x0\n" +
                 " FILEOS 0x4\n" +
                 " FILETYPE 0x1\n" +

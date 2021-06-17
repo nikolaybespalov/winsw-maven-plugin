@@ -122,7 +122,7 @@ public class RcFileWriter {
     }
 
     private void writeIcon(Writer writer) throws IOException {
-        if (rcFile.getIcon() == null || rcFile.getIcon().equals("")) {
+        if (StringUtils.isEmpty(rcFile.getIcon())) {
             return;
         }
 
