@@ -61,7 +61,7 @@ As an example, you can use the following
                 </goals>
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
-                    <winswVersion>2.2.0</winswVersion>
+                    <winswVersion>2.9.0</winswVersion>
                     <!-- you can also provide a classifier for net4 and other builds, default is bin <winswClassifier>net4</winswClassifier> -->
                     <!-- or use exists WinSW Executable File <executableFilePath>...</executableFilePath> -->
                     <executableFileName>${project.build.finalName}.exe</executableFileName>

@@ -1,0 +1,33 @@
+<project>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>winsw-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <winswVersion>2.9.0</winswVersion>
+                    <executableFileName>${project.build.finalName}.exe</executableFileName>
+                    <executableFilePath>${project.basedir}/${project.artifactId}.exe</executableFilePath>
+                    <configurationFileName>${project.build.finalName}.xml</configurationFileName>
+                    <configurationFilePath>${project.basedir}/${project.artifactId}.xml</configurationFilePath>
+                    <rcFile>
+                        <icon>${project.basedir}/java.ico</icon>
+                        <fileInfo>
+                            <fileVersion>${project.version}</fileVersion>
+                            <productVersion>${project.version}</productVersion>
+                            <comments>${project.description}</comments>
+                            <companyName>${organization.name}</companyName>
+                            <fileDescription>${project.description}</fileDescription>
+                            <txtFileVersion>${project.version}</txtFileVersion>
+                            <internalName>${project.name}</internalName>
+                            <copyright>© ${inceptionYear} ${organization.name} All Rights Reserved</copyright>
+                            <originalFilename>${project.build.finalName}.exe</originalFilename>
+                            <productName>${project.name}</productName>
+                            <txtProductVersion>${project.version}</txtProductVersion>
+                        </fileInfo>
+                    </rcFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

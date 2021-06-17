@@ -48,7 +48,7 @@ public class WinswMojo extends AbstractMojo {
     @SuppressWarnings("unused")
     private File outputDirectory;
 
-    @Parameter(defaultValue = "2.2.0")
+    @Parameter(defaultValue = "2.9.0")
     @SuppressWarnings("unused")
     private String winswVersion;
 
@@ -222,7 +222,7 @@ public class WinswMojo extends AbstractMojo {
 
         getLog().debug(path.toString());
 
-        RemoteRepository winswRepository = new RemoteRepository.Builder("winsw", "default", "http://repo.jenkins-ci.org/releases/").build();
+        RemoteRepository winswRepository = new RemoteRepository.Builder("winsw", "default", "https://repo.jenkins-ci.org/releases/").build();
 
         mavenProject.getRemoteProjectRepositories().add(winswRepository);
 

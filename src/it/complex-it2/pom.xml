@@ -34,7 +34,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}</outputDirectory>
-                            <winswVersion>2.2.0</winswVersion>
+                            <winswVersion>2.9.0</winswVersion>
                             <executableFileName>${project.build.finalName}.exe</executableFileName>
                             <executableFilePath>${project.basedir}/${project.artifactId}.exe</executableFilePath>
                             <configurationFileName>${project.build.finalName}.xml</configurationFileName>
