@@ -34,4 +34,4 @@ jobs:
             -Dsurefire.useFile=false \
             -Prun-its \
             -Pupload-coverage-report \
-            package
+            verify

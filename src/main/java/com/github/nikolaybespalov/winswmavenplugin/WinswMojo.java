@@ -18,7 +18,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.aether.repository.RemoteRepository;
-import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -81,10 +80,8 @@ public class WinswMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        if (!outputDirectory.exists()) {
-            if (!outputDirectory.mkdirs()) {
-                throw new MojoExecutionException("Could not create " + outputDirectory);
-            }
+        if (!outputDirectory.exists() && !outputDirectory.mkdirs()) {
+            throw new MojoExecutionException("Could not create " + outputDirectory);
         }
 
         processConfigurationFile();
@@ -227,7 +224,7 @@ public class WinswMojo extends AbstractMojo {
         mavenProject.getRemoteProjectRepositories().add(winswRepository);
 
         try {
-            MojoExecutor.executeMojo(
+            executeMojo(
                     plugin(
                             groupId("com.googlecode.maven-download-plugin"),
                             artifactId("download-maven-plugin"),
