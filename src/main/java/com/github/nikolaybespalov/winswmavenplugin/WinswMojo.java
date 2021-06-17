@@ -18,6 +18,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.aether.repository.RemoteRepository;
+import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -25,8 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Arrays;
-
-import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
 @Mojo(name = "winsw", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 @SuppressWarnings("unused")
@@ -224,23 +223,23 @@ public class WinswMojo extends AbstractMojo {
         mavenProject.getRemoteProjectRepositories().add(winswRepository);
 
         try {
-            executeMojo(
-                    plugin(
-                            groupId("com.googlecode.maven-download-plugin"),
-                            artifactId("download-maven-plugin"),
-                            version("1.4.1")
+            MojoExecutor.executeMojo(
+                    MojoExecutor.plugin(
+                            MojoExecutor.groupId("com.googlecode.maven-download-plugin"),
+                            MojoExecutor.artifactId("download-maven-plugin"),
+                            MojoExecutor.version("1.4.1")
                     ),
-                    goal("artifact"),
-                    configuration(
-                            element(name("groupId"), "com.sun.winsw"),
-                            element(name("artifactId"), "winsw"),
-                            element(name("version"), winswVersion),
-                            element(name("type"), "exe"),
-                            element(name("classifier"), winswClassifier),
-                            element(name("outputDirectory"), path.toFile().getParentFile().getAbsolutePath()),
-                            element(name("outputFileName"), path.toFile().getName())
+                    MojoExecutor.goal("artifact"),
+                    MojoExecutor.configuration(
+                            MojoExecutor.element(MojoExecutor.name("groupId"), "com.sun.winsw"),
+                            MojoExecutor.element(MojoExecutor.name("artifactId"), "winsw"),
+                            MojoExecutor.element(MojoExecutor.name("version"), winswVersion),
+                            MojoExecutor.element(MojoExecutor.name("type"), "exe"),
+                            MojoExecutor.element(MojoExecutor.name("classifier"), winswClassifier),
+                            MojoExecutor.element(MojoExecutor.name("outputDirectory"), path.toFile().getParentFile().getAbsolutePath()),
+                            MojoExecutor.element(MojoExecutor.name("outputFileName"), path.toFile().getName())
                     ),
-                    executionEnvironment(
+                    MojoExecutor.executionEnvironment(
                             mavenProject,
                             mavenSession,
                             pluginManager
@@ -412,22 +411,22 @@ public class WinswMojo extends AbstractMojo {
     private void copyFileToOutputDirectory(File filePath, String fileName) throws MojoExecutionException {
         getLog().debug("Copying file " + filePath);
 
-        executeMojo(
-                plugin(
-                        groupId("org.apache.maven.plugins"),
-                        artifactId("maven-resources-plugin"),
-                        version("3.2.0")
+        MojoExecutor.executeMojo(
+                MojoExecutor.plugin(
+                        MojoExecutor.groupId("org.apache.maven.plugins"),
+                        MojoExecutor.artifactId("maven-resources-plugin"),
+                        MojoExecutor.version("3.2.0")
                 ),
-                goal("copy-resources"),
-                configuration(
-                        element(name("outputDirectory"), outputDirectory.getAbsolutePath()),
-                        element(name("resources"),
-                                element("resource",
-                                        element("directory", filePath.getParent()),
-                                        element("include", filePath.getName()),
-                                        element("filtering", "true")))
+                MojoExecutor.goal("copy-resources"),
+                MojoExecutor.configuration(
+                        MojoExecutor.element(MojoExecutor.name("outputDirectory"), outputDirectory.getAbsolutePath()),
+                        MojoExecutor.element(MojoExecutor.name("resources"),
+                                MojoExecutor.element("resource",
+                                        MojoExecutor.element("directory", filePath.getParent()),
+                                        MojoExecutor.element("include", filePath.getName()),
+                                        MojoExecutor.element("filtering", "true")))
                 ),
-                executionEnvironment(
+                MojoExecutor.executionEnvironment(
                         mavenProject,
                         mavenSession,
                         pluginManager
