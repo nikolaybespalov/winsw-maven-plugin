@@ -3,13 +3,20 @@
         <plugins>
             <plugin>
                 <artifactId>winsw-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <winswVersion>2.9.0</winswVersion>
-                    <executableFileName>${project.build.finalName}.exe</executableFileName>
-                    <executableFilePath>${project.basedir}/${project.artifactId}.exe</executableFilePath>
+                    <executableFileName>basic-test.exe</executableFileName>
+                    <executableFilePath>src/test/resources/unit/basic-test/basic-test.exe</executableFilePath>
                     <configurationFileName>${project.build.finalName}.xml</configurationFileName>
-                    <configurationFilePath>${project.basedir}/${project.artifactId}.xml</configurationFilePath>
+                    <configurationFile>
+                        <id>${project.artifactId}</id>
+                        <name>${project.name}</name>
+                        <description>${project.description}</description>
+                        <executable>java</executable>
+                        <arguments>-jar ${build.finalName}.jar</arguments>
+                    </configurationFile>
                     <rcFile>
                         <icon>${project.basedir}/java.ico</icon>
                         <fileInfo>
