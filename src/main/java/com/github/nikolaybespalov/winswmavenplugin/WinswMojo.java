@@ -227,7 +227,7 @@ public class WinswMojo extends AbstractMojo {
                     MojoExecutor.plugin(
                             MojoExecutor.groupId("com.googlecode.maven-download-plugin"),
                             MojoExecutor.artifactId("download-maven-plugin"),
-                            MojoExecutor.version("1.4.1")
+                            MojoExecutor.version("1.6.3")
                     ),
                     MojoExecutor.goal("artifact"),
                     MojoExecutor.configuration(
