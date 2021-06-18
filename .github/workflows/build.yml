@@ -21,11 +21,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
-          java-version: 1.8
+          distribution: 'adopt'
+          java-version: '8'
       - name: Build
         env:
           CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: mvn --batch-mode -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report verify
+        run: mvnw.cmd --batch-mode -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report verify
