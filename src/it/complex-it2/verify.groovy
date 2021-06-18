@@ -14,16 +14,24 @@ File executableFile = new File(basedir, 'target/complex-it2-1.0-SNAPSHOT.exe')
 assert executableFile.exists()
 
 if (SystemUtils.IS_OS_WINDOWS) {
-    assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'Comments')
+    assert 'A IT verifying the complex use case (existing config xml file).' == getFileInfoValue(executableFile, 'Comments')
     assert 'complex-it2' == getFileInfoValue(executableFile, 'InternalName')
     assert 'complex-it2' == getFileInfoValue(executableFile, 'ProductName')
     assert 'Nikolay Bespalov' == getFileInfoValue(executableFile, 'CompanyName')
     assert '© 2019 Nikolay Bespalov All Rights Reserved' == getFileInfoValue(executableFile, 'LegalCopyright')
     assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'ProductVersion')
-    assert 'A IT verifying the complex use case.' == getFileInfoValue(executableFile, 'FileDescription')
+    assert 'A IT verifying the complex use case (existing config xml file).' == getFileInfoValue(executableFile, 'FileDescription')
     assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
     assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
     assert 'complex-it2-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+
+    def proc = (executableFile.getAbsolutePath() + ' install').execute()
+    proc.waitForOrKill(3000)
+    assert proc.exitValue() == 0
+
+    def proc2 = (executableFile.getAbsolutePath() + ' uninstall').execute()
+    proc2.waitForOrKill(3000)
+    assert proc2.exitValue() == 0
 }
 
 File configurationFile = new File(basedir, 'target/complex-it2-1.0-SNAPSHOT.xml')

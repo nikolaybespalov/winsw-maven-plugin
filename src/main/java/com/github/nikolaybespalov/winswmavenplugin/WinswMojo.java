@@ -343,17 +343,19 @@ public class WinswMojo extends AbstractMojo {
 
         File windresFile = extractFile("windres");
 
-        Path path = Files.createTempFile("winsw", ".o");
+        Path path = Files.createTempFile("winsw", ".res");
 
         getLog().debug(path.toString());
 
         // windres --preprocessor=type|cat -J rc -O coff -F pe-i386 INPUT.rc OUTPUT.o
         executeCommand(windresFile.getAbsolutePath(),
                 SystemUtils.IS_OS_WINDOWS ? "--preprocessor=type" : "--preprocessor=cat",
+                "-J",
+                "rc",
                 "-O",
-                "coff",
-                "-F",
-                "pe-i386",
+                "res",
+//                "-F",
+//                "pe-i386",
                 rcFile.getAbsolutePath(),
                 path.toFile().getAbsolutePath());
 
@@ -363,25 +365,37 @@ public class WinswMojo extends AbstractMojo {
     private File mergeResFileAndExeFile(File resFile, File exeFile) throws IOException, InterruptedException {
         getLog().debug("Merging res and exe files");
 
-        File ldFile = extractFile("ld");
+//        File ldFile = extractFile("ld");
+        File ldFile = extractFile("ResourceHacker");
 
         Path path = Files.createTempFile("winsw-merged", ".exe");
 
         getLog().debug(path.toString());
 
         // ld INPUT.o INPUT.exe -o OUTPUT.exe
+//        executeCommand(ldFile.getAbsolutePath(),
+//                "-mi386pe",
+//                "--oformat",
+//                "pei-i386",
+//                "--dynamicbase",
+//                "--nxcompat",
+//                "--no-seh",
+//                "--subsystem",
+//                "windows",
+//                "-s",
+//                resFile.getAbsolutePath(),
+//                exeFile.getAbsolutePath(),
+//                "-o",
+//                path.toFile().getAbsolutePath());
         executeCommand(ldFile.getAbsolutePath(),
-                "-mi386pe",
-                "--oformat",
-                "pei-i386",
-                "--dynamicbase",
-                "--nxcompat",
-                "--no-seh",
-                "-s",
-                resFile.getAbsolutePath(),
+                "-open",
                 exeFile.getAbsolutePath(),
-                "-o",
-                path.toFile().getAbsolutePath());
+                "-save",
+                path.toFile().getAbsolutePath(),
+                "-action",
+                "addoverwrite",
+                "-resource",
+                resFile.getAbsolutePath());
 
         return path.toFile();
     }

@@ -7,7 +7,7 @@
     <artifactId>complex-it2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <description>A IT verifying the complex use case.</description>
+    <description>A IT verifying the complex use case (existing config xml file).</description>
 
     <organization>
         <name>Nikolay Bespalov</name>

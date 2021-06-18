@@ -24,6 +24,14 @@ if (SystemUtils.IS_OS_WINDOWS) {
     assert null == getFileInfoValue(executableFile, 'LegalTrademarks')
     assert '1.0-SNAPSHOT' == getFileInfoValue(executableFile, 'FileVersion')
     assert 'complex-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
+
+    def proc = (executableFile.getAbsolutePath() + ' install').execute()
+    proc.waitForOrKill(3000)
+    assert proc.exitValue() == 0
+
+    def proc2 = (executableFile.getAbsolutePath() + ' uninstall').execute()
+    proc2.waitForOrKill(3000)
+    assert proc2.exitValue() == 0
 }
 
 File configurationFile = new File(basedir, 'target/complex-it-1.0-SNAPSHOT.xml')
