@@ -24,9 +24,10 @@ jobs:
           gpg-private-key: ${{ secrets.PGP_ARMORED_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Setup Maven settings.xml file
-        run: |
-          mkdir -p $HOME/.m2
-          cp .github/workflows/.m2/settings.xml $HOME/.m2/settings.xml
+        uses: canastro/copy-file-action@master
+        with:
+          source: .github/workflows/.m2/settings.xml
+          target: $HOME/.m2/settings.xml
       - name: Deploy
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

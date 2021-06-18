@@ -26,11 +26,11 @@ if (SystemUtils.IS_OS_WINDOWS) {
     assert 'complex-it-1.0-SNAPSHOT.exe' == getFileInfoValue(executableFile, 'OriginalFilename')
 
     def proc = (executableFile.getAbsolutePath() + ' install').execute()
-    proc.waitForOrKill(10000)
+    proc.waitForOrKill(20000)
     assert proc.exitValue() == 0
 
     def proc2 = (executableFile.getAbsolutePath() + ' uninstall').execute()
-    proc2.waitForOrKill(10000)
+    proc2.waitForOrKill(20000)
     assert proc2.exitValue() == 0
 }
 
