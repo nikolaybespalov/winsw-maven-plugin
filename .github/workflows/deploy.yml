@@ -32,7 +32,6 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         run: |
           mvnw --batch-mode ^
-            --file pom.xml ^
             -DskipTests ^
             -DskipNexusStagingDeployMojo=false ^
             deploy

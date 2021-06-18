@@ -30,7 +30,6 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
           mvnw --batch-mode ^
-            --file pom.xml ^
             -Dsurefire.useFile=false ^
             -Prun-its ^
             -Pupload-coverage-report ^
