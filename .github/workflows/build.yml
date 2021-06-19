@@ -14,17 +14,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04, macos-10.15]
-        include:
-          - os: windows-2016
-            mvnw: .\mvnw.cmd
-          - os: windows-2019
-            mvnw: .\mvnw.cmd
-          - os: ubuntu-18.04
-            mvnw: ./mvnw
-          - os: ubuntu-20.04
-            mvnw: ./mvnw
-          - os: macos-10.15
-            mvnw: ./mvnw
+        mvnw: [.\mvnw.cmd, .\mvnw.cmd, ./mvnw, ./mvnw, ./mvnw]
 
     runs-on: ${{ matrix.os }}
 
