@@ -27,6 +27,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Arrays;
 
+import static org.apache.commons.lang3.SystemUtils.*;
+
 @Mojo(name = "winsw", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 @SuppressWarnings("unused")
 public class WinswMojo extends AbstractMojo {
@@ -262,7 +264,7 @@ public class WinswMojo extends AbstractMojo {
         } else if (SystemUtils.IS_OS_LINUX) {
             resourceName += "/linux-x86-64/" + name;
         } else {
-            throw new IOException("Unsupported platform");
+            throw new IOException(String.format("Unsupported platform: %s %s %s", OS_ARCH, OS_NAME, OS_VERSION));
         }
 
         getLog().debug("Extraction " + resourceName);
