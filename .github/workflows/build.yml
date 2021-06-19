@@ -18,11 +18,11 @@ jobs:
           - os: windows-2016
             mvnw: call mvnw.cmd
           - os: windows-2019
-              mvnw: call mvnw.cmd
+            mvnw: call mvnw.cmd
           - os: ubuntu-18.04
-              mvnw: ./mvnw
+            mvnw: ./mvnw
           - os: ubuntu-20.04
-              mvnw: ./mvnw
+            mvnw: ./mvnw
 
     runs-on: ${{ matrix.os }}
 
