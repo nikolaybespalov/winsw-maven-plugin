@@ -15,7 +15,7 @@ The Maven plugin for WinSW lets you download the WinSW executable and generate X
 
 ## Adding plugin to pom.xml
 
-Using the Maven plugin, you specify the WinSW configuration in your POM. 
+Using the Maven plugin, you specify the WinSW configuration in your POM or use an existing one. 
 The format of this configuration is very similar to the standard WinSW XML format.
 
 ```xml
@@ -28,7 +28,7 @@ The format of this configuration is very similar to the standard WinSW XML forma
     </configurationFile>
 ```
 
-WinSW plugin also provides the ability to modify exe file information and add an icon. It doesn't matter on which OS.
+WinSW plugin also provides the ability to modify exe file information and add an icon. The plugin supports Linux, macOS and Windows.
 
 ```xml
     <rcFile>
@@ -62,8 +62,8 @@ As an example, you can use the following
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <winswVersion>2.9.0</winswVersion>
-                    <!-- you can also provide a classifier for net4 and other builds, default is bin <winswClassifier>net4</winswClassifier> -->
-                    <!-- or use exists WinSW Executable File <executableFilePath>...</executableFilePath> -->
+               <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
+               <!-- <executableFilePath>...</executableFilePath>, If winsw.exe file already exists -->
                     <executableFileName>${project.build.finalName}.exe</executableFileName>
                     <configurationFileName>${project.build.finalName}.xml</configurationFileName>
                     <configurationFile>
@@ -73,7 +73,7 @@ As an example, you can use the following
                         <executable>java</executable>
                         <arguments>-jar ${build.finalName}.jar</arguments>
                     </configurationFile>
-                    <!-- or use exists WinSW Configuration File <configurationFilePath>...</configurationFilePath> -->
+               <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
                     <rcFile>
                         <icon>${project.basedir}/${project.name}.ico</icon>
                         <fileInfo>
@@ -93,3 +93,7 @@ As an example, you can use the following
 If you have any questions, please register a ticket!
 
 Enjoy!
+
+## Many thanks
+
+[pe_tools](https://github.com/avast/pe_tools) is a great tools without which the possibilities would be limited!
