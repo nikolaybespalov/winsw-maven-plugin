@@ -3,6 +3,7 @@
 !.idea/dictionaries/
 
 # PyInstaller Files
+__pycache__
 build
 dist
 *.spec

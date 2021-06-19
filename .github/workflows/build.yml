@@ -13,7 +13,16 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-2016, windows-2019]
+        os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
+        include:
+          - os: windows-2016
+            mvnw: call mvnw.cmd
+          - os: windows-2019
+              mvnw: call mvnw.cmd
+          - os: ubuntu-18.04
+              mvnw: ./mvnw
+          - os: ubuntu-20.04
+              mvnw: ./mvnw
 
     runs-on: ${{ matrix.os }}
 
@@ -29,5 +38,4 @@ jobs:
         env:
           CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        shell: cmd
-        run: call mvnw.cmd --batch-mode -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report verify
+        run: ${{ matrix.mvnw }} --batch-mode -Dsurefire.useFile=false -Prun-its -Pupload-coverage-report verify

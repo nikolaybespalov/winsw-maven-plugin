@@ -25,6 +25,7 @@ hs_err_pid*
 # IDEA Files
 .idea/*
 !.idea/dictionaries/
+*.iml
 
 # Maven Files
 target/
