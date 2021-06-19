@@ -347,15 +347,13 @@ public class WinswMojo extends AbstractMojo {
 
         getLog().debug(path.toString());
 
-        // windres --preprocessor=type|cat -J rc -O coff -F pe-i386 INPUT.rc OUTPUT.o
+        // windres --preprocessor=type|cat -J rc -O res INPUT.rc OUTPUT.res
         executeCommand(windresFile.getAbsolutePath(),
                 SystemUtils.IS_OS_WINDOWS ? "--preprocessor=type" : "--preprocessor=cat",
                 "-J",
                 "rc",
                 "-O",
                 "res",
-//                "-F",
-//                "pe-i386",
                 rcFile.getAbsolutePath(),
                 path.toFile().getAbsolutePath());
 
@@ -365,37 +363,18 @@ public class WinswMojo extends AbstractMojo {
     private File mergeResFileAndExeFile(File resFile, File exeFile) throws IOException, InterruptedException {
         getLog().debug("Merging res and exe files");
 
-//        File ldFile = extractFile("ld");
-        File ldFile = extractFile("ResourceHacker");
+        File peresedFile = extractFile("peresed");
 
         Path path = Files.createTempFile("winsw-merged", ".exe");
 
         getLog().debug(path.toString());
 
-        // ld INPUT.o INPUT.exe -o OUTPUT.exe
-//        executeCommand(ldFile.getAbsolutePath(),
-//                "-mi386pe",
-//                "--oformat",
-//                "pei-i386",
-//                "--dynamicbase",
-//                "--nxcompat",
-//                "--no-seh",
-//                "--subsystem",
-//                "windows",
-//                "-s",
-//                resFile.getAbsolutePath(),
-//                exeFile.getAbsolutePath(),
-//                "-o",
-//                path.toFile().getAbsolutePath());
-        executeCommand(ldFile.getAbsolutePath(),
-                "-open",
-                exeFile.getAbsolutePath(),
-                "-save",
+        executeCommand(peresedFile.getAbsolutePath(),
+                "--apply",
+                resFile.getAbsolutePath(),
+                "--output",
                 path.toFile().getAbsolutePath(),
-                "-action",
-                "addoverwrite",
-                "-resource",
-                resFile.getAbsolutePath());
+                exeFile.getAbsolutePath());
 
         return path.toFile();
     }

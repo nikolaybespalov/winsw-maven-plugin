@@ -1,0 +1,8 @@
+# IDEA Files
+.idea/*
+!.idea/dictionaries/
+
+# PyInstaller Files
+build
+dist
+*.spec
