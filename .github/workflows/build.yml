@@ -16,9 +16,9 @@ jobs:
         os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
         include:
           - os: windows-2016
-            mvnw: call mvnw.cmd
+            mvnw: mvnw.cmd
           - os: windows-2019
-            mvnw: call mvnw.cmd
+            mvnw: mvnw.cmd
           - os: ubuntu-18.04
             mvnw: ./mvnw
           - os: ubuntu-20.04
