@@ -28,7 +28,7 @@ The format of this configuration is very similar to the standard WinSW XML forma
     </configurationFile>
 ```
 
-WinSW plugin also provides the ability to modify exe file information and add an icon. It doesn't matter on which OS
+WinSW plugin also provides the ability to modify exe file information and add an icon. It doesn't matter on which OS.
 
 ```xml
     <rcFile>

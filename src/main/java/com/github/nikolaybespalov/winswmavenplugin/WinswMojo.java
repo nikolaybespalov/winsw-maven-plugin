@@ -260,7 +260,7 @@ public class WinswMojo extends AbstractMojo {
         if (SystemUtils.IS_OS_WINDOWS) {
             resourceName += "/win32-x86/" + name + ".exe";
         } else if (SystemUtils.IS_OS_MAC_OSX) {
-            resourceName += "/macosx-x86/" + name;
+            resourceName += "/macosx-x86-64/" + name;
         } else if (SystemUtils.IS_OS_LINUX) {
             resourceName += "/linux-x86-64/" + name;
         } else {
