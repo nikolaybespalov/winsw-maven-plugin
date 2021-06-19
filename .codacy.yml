@@ -1,6 +1,7 @@
 exclude_paths:
   - '**/test/**'
   - '**/it/**'
+  - '**/peresed/**'
   - '**/*.xml'
   - '**/*.yml'
   - '*.xml'
