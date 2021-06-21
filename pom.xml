@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.nikolaybespalov</groupId>
@@ -186,17 +187,12 @@
                     <version>3.8.0</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.6.0</version>
-                </plugin>
-                <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.2</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>2.2.1</version>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.6.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -216,8 +212,9 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
-            <plugin> <!-- for Codacy, Travis-CI uploads coverage report to Codacy -->
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.4</version>
@@ -232,7 +229,6 @@
                         </goals>
                         <configuration>
                             <destFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</destFile>
-<!--                            <propertyName>surefire.jacoco.args</propertyName>-->
                         </configuration>
                     </execution>
 
@@ -244,7 +240,8 @@
                         </goals>
                         <configuration>
                             <dataFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report</outputDirectory>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report
+                            </outputDirectory>
                         </configuration>
                     </execution>
 
@@ -268,7 +265,9 @@
                         </goals>
                         <configuration>
                             <dataFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report</outputDirectory>
+                            <outputDirectory>
+                                ${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report
+                            </outputDirectory>
                         </configuration>
                     </execution>
 
@@ -299,31 +298,29 @@
                         </goals>
                         <configuration>
                             <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report
+                            </outputDirectory>
                         </configuration>
                     </execution>
 
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-<!--                    <argLine>${surefire.jacoco.args}</argLine>-->
-                </configuration>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -331,12 +328,14 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -357,6 +356,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -370,13 +370,14 @@
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
-                        <phase>package</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -388,135 +389,63 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     <skipNexusStagingDeployMojo>${skipNexusStagingDeployMojo}</skipNexusStagingDeployMojo>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>nexus-staging</id>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <debug>true</debug>
+                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                    <pomIncludes>
+                        <pomInclude>*/pom.xml</pomInclude>
+                    </pomIncludes>
+                    <postBuildHookScript>verify</postBuildHookScript>
+                    <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+                    <settingsFile>src/it/settings.xml</settingsFile>
+                    <debug>true</debug>
+                    <streamLogs>true</streamLogs>
+                    <goals>
+                        <goal>clean</goal>
+                        <goal>package</goal>
+                    </goals>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>install</goal>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.java.dev.jna</groupId>
+                        <artifactId>jna</artifactId>
+                        <version>5.3.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>net.java.dev.jna</groupId>
+                        <artifactId>jna-platform</artifactId>
+                        <version>5.3.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                        <version>3.9</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.0.0</version>
-                <reportSets>
-                    <reportSet>
-                        <id>aggregate</id>
-                        <reports>
-                            <report>aggregate</report>
-                            <report>test-aggregate</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
-
-    <profiles>
-        <profile>
-            <id>run-its</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-invoker-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <configuration>
-                            <debug>true</debug>
-                            <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                            <pomIncludes>
-                                <pomInclude>*/pom.xml</pomInclude>
-                            </pomIncludes>
-                            <postBuildHookScript>verify</postBuildHookScript>
-                            <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-                            <settingsFile>src/it/settings.xml</settingsFile>
-                            <debug>true</debug>
-                            <streamLogs>true</streamLogs>
-                            <goals>
-                                <goal>clean</goal>
-                                <goal>package</goal>
-                            </goals>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <goals>
-                                    <goal>install</goal>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>net.java.dev.jna</groupId>
-                                <artifactId>jna</artifactId>
-                                <version>5.3.0</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>net.java.dev.jna</groupId>
-                                <artifactId>jna-platform</artifactId>
-                                <version>5.3.0</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.commons</groupId>
-                                <artifactId>commons-lang3</artifactId>
-                                <version>3.9</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>upload-coverage-report</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <!-- https://github.com/halkeye/codacy-maven-plugin -->
-                        <groupId>com.gavinmogan</groupId>
-                        <artifactId>codacy-maven-plugin</artifactId>
-                        <version>1.2.0</version>
-                        <configuration>
-                            <!--suppress UnresolvedMavenProperty -->
-                            <apiToken>${env.CODACY_API_TOKEN}</apiToken>
-                            <!--suppress UnresolvedMavenProperty -->
-                            <projectToken>${env.CODACY_PROJECT_TOKEN}</projectToken>
-                            <coverageReportFile>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report/jacoco.xml</coverageReportFile>
-                            <codacyApiBaseUrl>https://api.codacy.com</codacyApiBaseUrl>
-                            <failOnMissingReportFile>false</failOnMissingReportFile>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>post-test</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>coverage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-    <!--    <repositories>-->
-    <!--        <repository>-->
-    <!--            <id>winsw</id>-->
-    <!--            <url>https://repo.jenkins-ci.org/releases/</url>-->
-    <!--        </repository>-->
-    <!--    </repositories>-->
-
-    <!--    <pluginRepositories>-->
-    <!--        <pluginRepository>-->
-    <!--            <id>winsw</id>-->
-    <!--            <url>https://repo.jenkins-ci.org/releases/</url>-->
-    <!--        </pluginRepository>-->
-    <!--    </pluginRepositories>-->
 </project>

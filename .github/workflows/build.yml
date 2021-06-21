@@ -40,4 +40,9 @@ jobs:
         env:
           CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: ${{ matrix.mvnw }} --batch-mode "-Dsurefire.useFile=false" "-Prun-its" "-Pupload-coverage-report" verify
+        run: ${{ matrix.mvnw }} --batch-mode verify
+      - name: Run Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: target/site/jacoco-merged-test-coverage-report/jacoco.xml
