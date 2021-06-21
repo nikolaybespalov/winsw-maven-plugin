@@ -13,6 +13,14 @@ public class ConfigurationFile {
     private String executable;
     private String arguments;
 
+    public ConfigurationFile(String id, String name, String description, String executable, String arguments) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.executable = executable;
+        this.arguments = arguments;
+    }
+
     public String getId() {
         return id;
     }

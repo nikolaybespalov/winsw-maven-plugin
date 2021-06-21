@@ -112,23 +112,11 @@ public class WinswMojo extends AbstractMojo {
         getLog().debug("Creating configuration file");
 
         if (configurationFile == null) {
-            configurationFile = new ConfigurationFile();
-        }
-
-        if (configurationFile.getId() == null) {
-            configurationFile.setId(mavenProject.getArtifactId());
-        }
-
-        if (configurationFile.getName() == null) {
-            configurationFile.setName(mavenProject.getName());
-        }
-
-        if (configurationFile.getExecutable() == null) {
-            configurationFile.setExecutable("java");
-        }
-
-        if (configurationFile.getArguments() == null) {
-            configurationFile.setArguments("-jar " + mavenProject.getBuild().getFinalName() + ".jar");
+            configurationFile = new ConfigurationFile(mavenProject.getArtifactId(),
+                    mavenProject.getName(),
+                    null,
+                    "java",
+                    "-jar " + mavenProject.getBuild().getFinalName() + ".jar");
         }
 
         File file = new File(outputDirectory, configurationFileName);
