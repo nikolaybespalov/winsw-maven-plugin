@@ -8,6 +8,10 @@ import com.github.nikolaybespalov.winswmavenplugin.xml.ConfigurationFileWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
+import org.apache.maven.artifact.repository.MavenArtifactRepository;
+import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.BuildPluginManager;
@@ -17,7 +21,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.eclipse.aether.repository.RemoteRepository;
+import org.apache.maven.settings.Settings;
 import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
@@ -32,6 +36,10 @@ import static org.apache.commons.lang3.SystemUtils.*;
 @Mojo(name = "winsw", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 @SuppressWarnings("unused")
 public class WinswMojo extends AbstractMojo {
+    public static final String WINSW_ARTIFACT_REPO = "https://repo.jenkins-ci.org/releases/";
+    public static final String WINSW_GROUP_ID = "com.sun.winsw";
+    public static final String WINSW_ARTIFACT_ID = "winsw";
+
     @Parameter(defaultValue = "${project}", readonly = true)
     @SuppressWarnings("unused")
     private MavenProject mavenProject;
@@ -43,6 +51,9 @@ public class WinswMojo extends AbstractMojo {
     @Component
     @SuppressWarnings("unused")
     private BuildPluginManager pluginManager;
+
+    @Parameter(defaultValue = "${settings}", readonly = true)
+    private Settings settings;
 
     @Parameter(defaultValue = "${project.build.directory}", required = true)
     @SuppressWarnings("unused")
@@ -150,7 +161,7 @@ public class WinswMojo extends AbstractMojo {
             }
         }
 
-        resultExeFile = exeFile;
+        resultExeFile = copyExecutableFile(exeFile);
 
         File rcFile;
 
@@ -193,9 +204,7 @@ public class WinswMojo extends AbstractMojo {
         }
     }
 
-    private File copyExecutableFile() throws MojoExecutionException {
-        //return copyFileToOutputDirectory(executableFile, executableFileName);
-
+    private File copyExecutableFile(File executableFilePath) throws MojoExecutionException {
         if (!executableFilePath.exists()) {
             throw new MojoExecutionException("File not found " + executableFilePath);
         }
@@ -213,16 +222,29 @@ public class WinswMojo extends AbstractMojo {
         return outputFile;
     }
 
+    private File copyExecutableFile() throws MojoExecutionException {
+        return copyExecutableFile(executableFilePath);
+    }
+
     private File downloadWinswBinArtifact() throws IOException, MojoExecutionException {
+        File winswPath = new File(String.format("%s/%s/%s/%s/%s-%s-%s.exe",
+                settings.getLocalRepository(), WINSW_GROUP_ID.replace('.', '/'), WINSW_ARTIFACT_ID, winswVersion, WINSW_ARTIFACT_ID, winswVersion, winswClassifier));
+
+        if (winswPath.exists()) {
+            getLog().debug("Use of existing winsw.exe: " + winswPath);
+
+            return winswPath;
+        }
+
         getLog().debug("Downloading winsw.exe file");
 
-        Path path = Files.createTempFile("winsw", ".exe");
+        ArtifactRepository winswRepository = new MavenArtifactRepository("winsw",
+                WINSW_ARTIFACT_REPO,
+                new DefaultRepositoryLayout(),
+                new ArtifactRepositoryPolicy(false, "never", "fail"),
+                new ArtifactRepositoryPolicy(true, "never", "fail"));
 
-        getLog().debug(path.toString());
-
-        RemoteRepository winswRepository = new RemoteRepository.Builder("winsw", "default", "https://repo.jenkins-ci.org/releases/").build();
-
-        mavenProject.getRemoteProjectRepositories().add(winswRepository);
+        mavenProject.getRemoteArtifactRepositories().add(winswRepository);
 
         try {
             MojoExecutor.executeMojo(
@@ -233,13 +255,11 @@ public class WinswMojo extends AbstractMojo {
                     ),
                     MojoExecutor.goal("artifact"),
                     MojoExecutor.configuration(
-                            MojoExecutor.element(MojoExecutor.name("groupId"), "com.sun.winsw"),
-                            MojoExecutor.element(MojoExecutor.name("artifactId"), "winsw"),
+                            MojoExecutor.element(MojoExecutor.name("groupId"), WINSW_GROUP_ID),
+                            MojoExecutor.element(MojoExecutor.name("artifactId"), WINSW_ARTIFACT_ID),
                             MojoExecutor.element(MojoExecutor.name("version"), winswVersion),
                             MojoExecutor.element(MojoExecutor.name("type"), "exe"),
-                            MojoExecutor.element(MojoExecutor.name("classifier"), winswClassifier),
-                            MojoExecutor.element(MojoExecutor.name("outputDirectory"), path.toFile().getParentFile().getAbsolutePath()),
-                            MojoExecutor.element(MojoExecutor.name("outputFileName"), path.toFile().getName())
+                            MojoExecutor.element(MojoExecutor.name("classifier"), winswClassifier)
                     ),
                     MojoExecutor.executionEnvironment(
                             mavenProject,
@@ -248,10 +268,10 @@ public class WinswMojo extends AbstractMojo {
                     )
             );
         } finally {
-            mavenProject.getRemoteProjectRepositories().remove(winswRepository);
+            mavenProject.getRemoteArtifactRepositories().remove(winswRepository);
         }
 
-        return path.toFile();
+        return winswPath;
     }
 
     private File extractFile(String name) throws IOException {
