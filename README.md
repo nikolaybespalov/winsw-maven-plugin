@@ -3,7 +3,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/nikolaybespalov/winsw-maven-plugin/Build?label=Build)](https://github.com/nikolaybespalov/winsw-maven-plugin/actions?query=workflow%3ABuild)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/nikolaybespalov/winsw-maven-plugin/Deploy?label=Deploy)](https://github.com/nikolaybespalov/winsw-maven-plugin/actions?query=workflow%3ADeploy)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.nikolaybespalov/winsw-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.nikolaybespalov%22%20AND%20a:%22winsw-maven-plugin%22)
-[![Codacy coverage](https://img.shields.io/codacy/coverage/76a37ca267664b63bb71d5cd79b8df25)](https://app.codacy.com/gh/nikolaybespalov/winsw-maven-plugin)
+[![Codacy coverage](https://img.shields.io/codacy/coverage/76a37ca267664b63bb71d5cd79b8df25?color=GREEN)](https://app.codacy.com/gh/nikolaybespalov/winsw-maven-plugin)
 [![Codacy grade](https://img.shields.io/codacy/grade/76a37ca267664b63bb71d5cd79b8df25)](https://app.codacy.com/gh/nikolaybespalov/winsw-maven-plugin)
 
 Maven plugin for [winsw](https://github.com/kohsuke/winsw).
