@@ -46,6 +46,7 @@ jobs:
         with:
           name: jacoco-${{ matrix.os }}
           path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
+          retention-days: 5
 
   aggregate-jacoco-reports:
 
