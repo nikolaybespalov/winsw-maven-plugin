@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: ${{ matrix.mvnw }} --batch-mode verify
 
-      - name: Upload jacoco report
+      - name: Upload JaCoCo report
         uses: 'actions/upload-artifact@v2'
         with:
           name: jacoco-${{ matrix.os }}
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Download all jacoco reports
+      - name: Download all JaCoCo reports
         uses: actions/download-artifact@v2
 
       - name: Run Codacy Coverage Reporter
@@ -62,15 +62,3 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: jacoco-windows-2016/jacoco.xml, jacoco-windows-2019/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-10.15/jacoco.xml
-
-#      - name: Merge all jacoco reports
-#        uses: actions/jacoco-merge@v1
-#        with:
-#          exec-file: >
-#            jacoco-windows-2016/jacoco-merged.exec
-#            jacoco-windows-2019/jacoco-merged.exec
-#            jacoco-ubuntu-18.04/jacoco-merged.exec
-#            jacoco-ubuntu-20.04/jacoco-merged.exec
-#            jacoco-macos-10.15/jacoco-merged.exec
-#          dest-file:
-#            jacoco.exec
