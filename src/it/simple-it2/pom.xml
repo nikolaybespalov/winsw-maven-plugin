@@ -28,6 +28,8 @@
                         </goals>
                         <configuration>
                             <executableFile>${project.basedir}/${project.artifactId}.exe</executableFile>
+                            <rcFile>
+                            </rcFile>
                         </configuration>
                     </execution>
                 </executions>

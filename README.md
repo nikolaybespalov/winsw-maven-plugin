@@ -63,7 +63,7 @@ As an example, you can use the following
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <winswVersion>2.9.0</winswVersion>
                <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
-               <!-- <executableFilePath>...</executableFilePath>, If winsw.exe file already exists -->
+               <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
                     <executableFileName>${project.build.finalName}.exe</executableFileName>
                     <configurationFileName>${project.build.finalName}.xml</configurationFileName>
                     <configurationFile>
