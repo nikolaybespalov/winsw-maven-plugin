@@ -13,6 +13,9 @@ public class ConfigurationFile {
     private String executable;
     private String arguments;
 
+    public ConfigurationFile() {
+    }
+
     public ConfigurationFile(String id, String name, String description, String executable, String arguments) {
         this.id = id;
         this.name = name;

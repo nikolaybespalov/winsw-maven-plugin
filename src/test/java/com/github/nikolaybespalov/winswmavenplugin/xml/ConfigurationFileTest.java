@@ -1,11 +1,9 @@
 package com.github.nikolaybespalov.winswmavenplugin.xml;
 
-import com.github.nikolaybespalov.winswmavenplugin.rc.FileInfo;
-import com.github.nikolaybespalov.winswmavenplugin.rc.RcFile;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ConfigurationFileTest {
 
