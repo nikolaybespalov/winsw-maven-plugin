@@ -286,7 +286,7 @@
                                     </includes>
                                 </fileSet>
                             </fileSets>
-                            <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
+                            <destFile>${project.build.directory}/jacoco-output/jacoco-merged.exec</destFile>
                         </configuration>
                     </execution>
 
@@ -297,7 +297,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
+                            <dataFile>${project.build.directory}/jacoco-output/jacoco-merged.exec</dataFile>
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report
                             </outputDirectory>
                         </configuration>
