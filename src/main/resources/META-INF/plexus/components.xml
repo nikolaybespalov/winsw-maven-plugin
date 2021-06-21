@@ -1,0 +1,20 @@
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.Lifecycle</role>
+            <implementation>org.apache.maven.lifecycle.Lifecycle</implementation>
+            <role-hint>winsw</role-hint>
+            <configuration>
+                <id>winsw</id>
+                <phases>
+                    <phase>winsw-plugin-not-used-phase</phase>
+                </phases>
+                <default-phases>
+                    <package>
+                        com.github.nikolaybespalov:winsw-maven-plugin:${project.version}:winsw
+                    </package>
+                </default-phases>
+            </configuration>
+        </component>
+    </components>
+</component-set>
