@@ -15,109 +15,51 @@ public class RcFileWriter {
 
     public void writeTo(Writer writer) throws IOException {
         writeHeader(writer);
-        writer.append("\n");
-        writer.append("\n");
+        writer.append("\n\n");
 
         writeVersionInfo(writer);
-        writer.append("\n");
-        writer.append("\n");
+        writer.append("\n\n");
 
         writeIcon(writer);
     }
 
     private void writeHeader(Writer writer) throws IOException {
-        writer.append("LANGUAGE ").append(String.valueOf(rcFile.getLang())).append(", ").append(String.valueOf(rcFile.getSubLang()));
+        writer.append(String.format("LANGUAGE %s, %s", rcFile.getLang(), rcFile.getSubLang()));
     }
 
     private void writeVersionInfo(Writer writer) throws IOException {
         FileInfo fi = rcFile.getFileInfo();
 
-        writer.append("1 VERSIONINFO");
-        writer.append("\n");
-        writer.append(" FILEVERSION ").append(prepareVersion(fi.getFileVersion()));
-        writer.append("\n");
-        writer.append(" PRODUCTVERSION ").append(prepareVersion(fi.getProductVersion()));
-        writer.append("\n");
-        writer.append(" FILEFLAGSMASK 0x0");
-        writer.append("\n");
-        writer.append(" FILEOS 0x4");
-        writer.append("\n");
-        writer.append(" FILETYPE 0x1");
-        writer.append("\n");
-        writer.append("BEGIN");
-        writer.append("\n");
-        writer.append("  BLOCK ").append("\"StringFileInfo\"");
-        writer.append("\n");
-        writer.append("  BEGIN");
-        writer.append("\n");
-        writer.append("    BLOCK ").append("\"000004b0\"");
-        writer.append("\n");
-        writer.append("    BEGIN");
-        writer.append("\n");
+        writer.append("1 VERSIONINFO\n");
+        writer.append(String.format(" FILEVERSION %s\n", prepareVersion(fi.getFileVersion())));
+        writer.append(String.format(" PRODUCTVERSION %s\n", prepareVersion(fi.getProductVersion())));
+        writer.append(" FILEFLAGSMASK 0x0\n");
+        writer.append(" FILEOS 0x4\n");
+        writer.append(" FILETYPE 0x1\n");
+        writer.append("BEGIN\n");
+        writer.append("  BLOCK ").append("\"StringFileInfo\"\n");
+        writer.append("  BEGIN\n");
+        writer.append("    BLOCK ").append("\"000004b0\"\n");
+        writer.append("    BEGIN\n");
 
-        if (fi.getComments() != null) {
-            writer.append("      VALUE ").append("\"Comments\", ").append("\"").append(fi.getComments()).append("\"");
-            writer.append("\n");
-        }
+        writeStringValue(writer, "Comments", fi.getComments());
+        writeStringValue(writer, "CompanyName", fi.getCompanyName());
+        writeStringValue(writer, "FileDescription", fi.getFileDescription());
+        writeStringValue(writer, "FileVersion", fi.getTxtFileVersion());
+        writeStringValue(writer, "InternalName", fi.getInternalName());
+        writeStringValue(writer, "LegalCopyright", fi.getCopyright());
+        writeStringValue(writer, "LegalTrademarks", fi.getTrademarks());
+        writeStringValue(writer, "OriginalFilename", fi.getOriginalFilename());
+        writeStringValue(writer, "ProductName", fi.getProductName());
+        writeStringValue(writer, "ProductVersion", fi.getTxtProductVersion());
 
-        if (fi.getCompanyName() != null) {
-            writer.append("      VALUE ").append("\"CompanyName\", ").append("\"").append(fi.getCompanyName()).append("\"");
-            writer.append("\n");
-        }
+        writer.append("    END\n");
+        writer.append("  END\n");
 
-        if (fi.getFileDescription() != null) {
-            writer.append("      VALUE ").append("\"FileDescription\", ").append("\"").append(fi.getFileDescription()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getTxtFileVersion() != null) {
-            writer.append("      VALUE ").append("\"FileVersion\", ").append("\"").append(fi.getTxtFileVersion()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getInternalName() != null) {
-            writer.append("      VALUE ").append("\"InternalName\", ").append("\"").append(fi.getInternalName()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getCopyright() != null) {
-            writer.append("      VALUE ").append("\"LegalCopyright\", ").append("\"").append(fi.getCopyright()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getTrademarks() != null) {
-            writer.append("      VALUE ").append("\"LegalTrademarks\", ").append("\"").append(fi.getTrademarks()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getOriginalFilename() != null) {
-            writer.append("      VALUE ").append("\"OriginalFilename\", ").append("\"").append(fi.getOriginalFilename()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getProductName() != null) {
-            writer.append("      VALUE ").append("\"ProductName\", ").append("\"").append(fi.getProductName()).append("\"");
-            writer.append("\n");
-        }
-
-        if (fi.getProductName() != null) {
-            writer.append("      VALUE ").append("\"ProductVersion\", ").append("\"").append(fi.getTxtProductVersion()).append("\"");
-            writer.append("\n");
-        }
-
-        writer.append("    END");
-        writer.append("\n");
-        writer.append("  END");
-        writer.append("\n");
-
-        writer.append("  BLOCK ").append("\"VarFileInfo\"");
-        writer.append("\n");
-        writer.append("  BEGIN");
-        writer.append("\n");
-        writer.append("    VALUE ").append("\"Translation\", 0x0, 0x04b0");
-        writer.append("\n");
-        writer.append("  END");
-        writer.append("\n");
+        writer.append("  BLOCK \"VarFileInfo\"\n");
+        writer.append("  BEGIN\n");
+        writer.append("    VALUE \"Translation\", 0x0, 0x04b0\n");
+        writer.append("  END\n");
         writer.append("END");
     }
 
@@ -126,7 +68,7 @@ public class RcFileWriter {
             return;
         }
 
-        writer.append("1 ICON DISCARDABLE ").append("\"").append(FilenameUtils.separatorsToUnix(rcFile.getIcon())).append("\"");
+        writer.append(String.format("1 ICON DISCARDABLE \"%s\"", FilenameUtils.separatorsToUnix(rcFile.getIcon())));
     }
 
     private String prepareVersion(String version) {
@@ -141,5 +83,14 @@ public class RcFileWriter {
         }
 
         return versionBuilder.toString();
+    }
+
+    private void writeStringValue(Writer writer, String key, String value) throws IOException {
+        if (value == null) {
+            return;
+        }
+
+        writer.append(String.format("      VALUE \"%s\", \"%s\"", key, value));
+        writer.append("\n");
     }
 }
