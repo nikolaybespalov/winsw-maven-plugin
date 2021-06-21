@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04, macos-10.15]
+        os: [ windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04, macos-10.15 ]
         include:
           - os: windows-2016
             mvnw: .\mvnw.cmd
@@ -41,14 +41,22 @@ jobs:
       - name: Build
         run: ${{ matrix.mvnw }} --batch-mode verify
 
+      - name: Upload jacoco report
+        uses: 'actions/upload-artifact@v2'
+        with:
+          name: jacoco-${{ matrix.os }}.xml
+          path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
+
+  aggregate:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Download all jacoco reports
+        uses: actions/download-artifact@v2
+
       - name: Run Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: target/site/jacoco-merged-test-coverage-report/jacoco.xml
-
-      - name: 'Accidently upload to the same artifact via multiple jobs'
-        uses: 'actions/upload-artifact@v2'
-        with:
-          name: my-artifact${{ matrix.os }}
-          path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
+          coverage-reports: jacoco-windows-2016.xml, jacoco-windows-2019.xml, jacoco-ubuntu-18.04.xml, jacoco-ubuntu-20.04.xml, jacoco-macos-10.15.xml
