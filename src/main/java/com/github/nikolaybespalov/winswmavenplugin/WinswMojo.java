@@ -29,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static org.apache.commons.lang3.SystemUtils.*;
 
@@ -158,15 +159,15 @@ public class WinswMojo extends AbstractMojo {
 
         resultExeFile = copyExecutableFile(exeFile);
 
-        File rcFile;
+        if (this.rcFile != null) {
+            File rcFile;
 
-        try {
-            rcFile = writeRcFile();
-        } catch (IOException e) {
-            throw new MojoExecutionException("Failed to write rc file", e);
-        }
+            try {
+                rcFile = writeRcFile();
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to write rc file", e);
+            }
 
-        if (rcFile != null) {
             File resFile;
 
             try {
@@ -270,24 +271,24 @@ public class WinswMojo extends AbstractMojo {
     }
 
     private File extractFile(String name) throws IOException {
-        String resourceName = "/bin";
+        String resourceNameFormat;
 
         if (IS_OS_WINDOWS) {
-            resourceName += "/win32-x86/" + name + ".exe";
+            resourceNameFormat = "/bin/win32-x86/%s.exe";
         } else if (IS_OS_MAC_OSX) {
-            resourceName += "/macosx-x86-64/" + name;
+            resourceNameFormat = "/bin/macosx-x86-64/%s";
         } else if (IS_OS_LINUX) {
-            resourceName += "/linux-x86-64/" + name;
+            resourceNameFormat = "/bin/linux-x86-64/%s";
         } else {
             throw new IOException(String.format("Unsupported platform: %s %s %s", OS_ARCH, OS_NAME, OS_VERSION));
         }
 
+        String resourceName = String.format(resourceNameFormat, name);
+
         getLog().debug("Extraction " + resourceName);
 
         try (InputStream is = getClass().getResourceAsStream(resourceName)) {
-            if (is == null) {
-                throw new IOException("Failed to getResourceAsStream for " + resourceName);
-            }
+            assert is != null;
 
             Path path = Files.createTempFile(name, ".exe");
 
@@ -310,40 +311,14 @@ public class WinswMojo extends AbstractMojo {
 
         getLog().debug(path.toString());
 
-        if (rcFile == null) {
-            return null;
-        }
-
         if (rcFile.getFileInfo() == null) {
-            rcFile.setFileInfo(new FileInfo());
-        }
-
-        if (rcFile.getFileInfo().getFileVersion() == null) {
-            rcFile.getFileInfo().setFileVersion(mavenProject.getVersion());
-        }
-
-        if (rcFile.getFileInfo().getProductVersion() == null) {
-            rcFile.getFileInfo().setProductVersion(mavenProject.getVersion());
-        }
-
-        if (rcFile.getFileInfo().getTxtFileVersion() == null) {
-            rcFile.getFileInfo().setTxtFileVersion(mavenProject.getVersion());
-        }
-
-        if (rcFile.getFileInfo().getInternalName() == null) {
-            rcFile.getFileInfo().setInternalName(mavenProject.getName());
-        }
-
-        if (rcFile.getFileInfo().getOriginalFilename() == null) {
-            rcFile.getFileInfo().setOriginalFilename(executableFileName);
-        }
-
-        if (rcFile.getFileInfo().getProductName() == null) {
-            rcFile.getFileInfo().setProductName(mavenProject.getName());
-        }
-
-        if (rcFile.getFileInfo().getTxtProductVersion() == null) {
-            rcFile.getFileInfo().setTxtProductVersion(mavenProject.getVersion());
+            rcFile.setFileInfo(new FileInfo(mavenProject.getVersion(),
+                    mavenProject.getVersion(),
+                    mavenProject.getVersion(),
+                    mavenProject.getName(),
+                    executableFileName,
+                    mavenProject.getName(),
+                    mavenProject.getVersion()));
         }
 
         RcFileWriter rcFileWriter = new RcFileWriter(rcFile);

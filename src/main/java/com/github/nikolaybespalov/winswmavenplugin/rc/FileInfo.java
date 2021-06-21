@@ -20,6 +20,16 @@ public class FileInfo {
     private String productName;
     private String txtProductVersion;
 
+    public FileInfo(String fileVersion, String productVersion, String txtFileVersion, String internalName, String originalFilename, String productName, String txtProductVersion) {
+        this.fileVersion = fileVersion;
+        this.productVersion = productVersion;
+        this.txtFileVersion = txtFileVersion;
+        this.internalName = internalName;
+        this.originalFilename = originalFilename;
+        this.productName = productName;
+        this.txtProductVersion = txtProductVersion;
+    }
+
     public String getFileVersion() {
         return fileVersion;
     }
