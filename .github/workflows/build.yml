@@ -45,7 +45,7 @@ jobs:
         uses: 'actions/upload-artifact@v2'
         with:
           name: jacoco-${{ matrix.os }}
-          path: target/jacoco-output/jacoco-merged.exec
+          path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
 
   aggregate-jacoco-reports:
 
@@ -57,20 +57,20 @@ jobs:
       - name: Download all jacoco reports
         uses: actions/download-artifact@v2
 
-#      - name: Run Codacy Coverage Reporter
-#        uses: codacy/codacy-coverage-reporter-action@v1
-#        with:
-#          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#          coverage-reports: jacoco-windows-2016.xml, jacoco-windows-2019.xml, jacoco-ubuntu-18.04.xml, jacoco-ubuntu-20.04.xml, jacoco-macos-10.15.xml
-
-      - name: Merge all jacoco reports
-        uses: actions/jacoco-merge@v1
+      - name: Run Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
         with:
-          exec-file: >
-            jacoco-windows-2016/jacoco-merged.exec
-            jacoco-windows-2019/jacoco-merged.exec
-            jacoco-ubuntu-18.04/jacoco-merged.exec
-            jacoco-ubuntu-20.04/jacoco-merged.exec
-            jacoco-macos-10.15/jacoco-merged.exec
-          dest-file:
-            jacoco.exec
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: jacoco-windows-2016/jacoco.xml, jacoco-windows-2019/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-10.15/jacoco.xml
+
+#      - name: Merge all jacoco reports
+#        uses: actions/jacoco-merge@v1
+#        with:
+#          exec-file: >
+#            jacoco-windows-2016/jacoco-merged.exec
+#            jacoco-windows-2019/jacoco-merged.exec
+#            jacoco-ubuntu-18.04/jacoco-merged.exec
+#            jacoco-ubuntu-20.04/jacoco-merged.exec
+#            jacoco-macos-10.15/jacoco-merged.exec
+#          dest-file:
+#            jacoco.exec
