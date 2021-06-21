@@ -23,7 +23,8 @@ public class FileInfo {
     public FileInfo() {
     }
 
-    public FileInfo(String fileVersion, String productVersion, String txtFileVersion, String internalName, String originalFilename, String productName, String txtProductVersion) {
+    public FileInfo(String fileVersion, String productVersion, String txtFileVersion, String internalName,
+                    String originalFilename, String productName, String txtProductVersion) {
         this.fileVersion = fileVersion;
         this.productVersion = productVersion;
         this.txtFileVersion = txtFileVersion;
