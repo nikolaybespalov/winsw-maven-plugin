@@ -488,7 +488,7 @@
                             <apiToken>${env.CODACY_API_TOKEN}</apiToken>
                             <!--suppress UnresolvedMavenProperty -->
                             <projectToken>${env.CODACY_PROJECT_TOKEN}</projectToken>
-                            <coverageReportFile>target/coverage-reports/jacoco/jacoco.xml</coverageReportFile>
+                            <coverageReportFile>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report/jacoco.xml</coverageReportFile>
                             <codacyApiBaseUrl>https://api.codacy.com</codacyApiBaseUrl>
                             <failOnMissingReportFile>false</failOnMissingReportFile>
                         </configuration>

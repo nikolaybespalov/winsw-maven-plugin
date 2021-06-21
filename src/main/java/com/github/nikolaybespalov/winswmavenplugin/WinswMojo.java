@@ -7,7 +7,6 @@ import com.github.nikolaybespalov.winswmavenplugin.xml.ConfigurationFile;
 import com.github.nikolaybespalov.winswmavenplugin.xml.ConfigurationFileWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
 import org.apache.maven.artifact.repository.MavenArtifactRepository;
@@ -151,11 +150,7 @@ public class WinswMojo extends AbstractMojo {
         if (executableFilePath != null) {
             exeFile = copyExecutableFile();
         } else {
-            try {
-                exeFile = downloadWinswBinArtifact();
-            } catch (IOException e) {
-                throw new MojoExecutionException("Failed to download winsw.exe", e);
-            }
+            exeFile = downloadWinswBinArtifact();
         }
 
         resultExeFile = copyExecutableFile(exeFile);
@@ -223,7 +218,7 @@ public class WinswMojo extends AbstractMojo {
         return copyExecutableFile(executableFilePath);
     }
 
-    private File downloadWinswBinArtifact() throws IOException, MojoExecutionException {
+    private File downloadWinswBinArtifact() throws MojoExecutionException {
         File winswPath = new File(String.format("%s/%s/%s/%s/%s-%s-%s.exe",
                 settings.getLocalRepository(), WINSW_GROUP_ID.replace('.', '/'), WINSW_ARTIFACT_ID, winswVersion, WINSW_ARTIFACT_ID, winswVersion, winswClassifier));
 
@@ -274,11 +269,11 @@ public class WinswMojo extends AbstractMojo {
     private File extractFile(String name) throws IOException {
         String resourceName = "/bin";
 
-        if (SystemUtils.IS_OS_WINDOWS) {
+        if (IS_OS_WINDOWS) {
             resourceName += "/win32-x86/" + name + ".exe";
-        } else if (SystemUtils.IS_OS_MAC_OSX) {
+        } else if (IS_OS_MAC_OSX) {
             resourceName += "/macosx-x86-64/" + name;
-        } else if (SystemUtils.IS_OS_LINUX) {
+        } else if (IS_OS_LINUX) {
             resourceName += "/linux-x86-64/" + name;
         } else {
             throw new IOException(String.format("Unsupported platform: %s %s %s", OS_ARCH, OS_NAME, OS_VERSION));
@@ -293,7 +288,7 @@ public class WinswMojo extends AbstractMojo {
 
             Path path = Files.createTempFile(name, ".exe");
 
-            if (!SystemUtils.IS_OS_WINDOWS) {
+            if (!IS_OS_WINDOWS) {
                 Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rwxr-xr-x"));
             }
 
@@ -368,7 +363,7 @@ public class WinswMojo extends AbstractMojo {
 
         // windres --preprocessor=type|cat -J rc -O res INPUT.rc OUTPUT.res
         executeCommand(windresFile.getAbsolutePath(),
-                SystemUtils.IS_OS_WINDOWS ? "--preprocessor=type" : "--preprocessor=cat",
+                IS_OS_WINDOWS ? "--preprocessor=type" : "--preprocessor=cat",
                 "-J",
                 "rc",
                 "-O",
