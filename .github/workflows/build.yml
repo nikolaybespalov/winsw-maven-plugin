@@ -46,3 +46,9 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: target/site/jacoco-merged-test-coverage-report/jacoco.xml
+
+      - name: 'Accidently upload to the same artifact via multiple jobs'
+        uses: 'actions/upload-artifact@v2'
+        with:
+          name: my-artifact${{ matrix.os }}
+          path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
