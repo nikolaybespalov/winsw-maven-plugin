@@ -31,13 +31,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Set up JDK 1.8
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '8'
+
       - name: Build
         run: ${{ matrix.mvnw }} --batch-mode verify
+
       - name: Run Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
