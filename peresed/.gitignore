@@ -7,3 +7,10 @@ __pycache__
 build
 dist
 *.spec
+
+# Nuitka Files
+peresed.build
+peresed.dist
+peresed.onefile-build
+
+*.exe
