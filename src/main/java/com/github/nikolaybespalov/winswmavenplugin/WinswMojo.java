@@ -269,7 +269,7 @@ public class WinswMojo extends AbstractMojo {
         String resourceNameFormat;
 
         if (IS_OS_WINDOWS) {
-            if (OS_ARCH.contains("x86-64")) {
+            if (OS_ARCH.contains("x86_64") || OS_ARCH.contains("amd64")) {
                 resourceNameFormat = "/bin/win32-x86-64/%s.exe";
             } else {
                 resourceNameFormat = "/bin/win32-x86/%s.exe";
