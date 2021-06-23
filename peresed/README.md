@@ -10,11 +10,11 @@ Based on https://github.com/avast/pe_tools/blob/master/pe_tools/peresed.py but s
 
     # For Windows (Because Windows Defender believes that the file created with PyInstaller/py2exe contains a virus)
     "c:\Program Files (x86)\Python\Python38\python.exe" -m pip install -U nuitka
+    "c:\Program Files (x86)\Python\Python38\python.exe" -m pip install -U pe_tools
     "c:\Program Files (x86)\Python\Python38\python.exe" -m nuitka ^
         --onefile ^
         --standalone ^
         --msvc=14.2 ^
-        --follow-imports ^
         --windows-uac-admin ^
         --windows-company-name="Nikolay Bespalov" ^
         --windows-product-name=winsw-maven-plugin ^

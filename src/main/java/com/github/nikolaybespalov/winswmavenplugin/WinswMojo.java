@@ -7,7 +7,6 @@ import com.github.nikolaybespalov.winswmavenplugin.xml.ConfigurationFile;
 import com.github.nikolaybespalov.winswmavenplugin.xml.ConfigurationFileWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
 import org.apache.maven.artifact.repository.MavenArtifactRepository;
@@ -262,10 +261,10 @@ public class WinswMojo extends AbstractMojo {
         String resourceNameFormat;
 
         if (IS_OS_WINDOWS) {
-            if (OS_ARCH.contains("x86")) {
-                resourceNameFormat = "/bin/win32-x86/%s.exe";
-            } else {
+            if (OS_ARCH.contains("x86-64")) {
                 resourceNameFormat = "/bin/win32-x86-64/%s.exe";
+            } else {
+                resourceNameFormat = "/bin/win32-x86/%s.exe";
             }
         } else if (IS_OS_MAC_OSX) {
             resourceNameFormat = "/bin/macosx-x86-64/%s";
