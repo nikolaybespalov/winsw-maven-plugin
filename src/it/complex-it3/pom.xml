@@ -43,7 +43,7 @@
                                 <name>${project.name}</name>
                                 <description>${project.description}</description>
                                 <executable>java</executable>
-                                <arguments>-jar ${build.finalName}.jar</arguments>
+                                <arguments>-jar ${project.build.finalName}.jar</arguments>
                             </configurationFile>
                             <rcFile>
                                 <icon>${project.basedir}/java.ico</icon>
@@ -51,11 +51,11 @@
                                     <fileVersion>${project.version}</fileVersion>
                                     <productVersion>${project.version}</productVersion>
                                     <comments>${project.description}</comments>
-                                    <companyName>${organization.name}</companyName>
+                                    <companyName>${project.organization.name}</companyName>
                                     <fileDescription>${project.description}</fileDescription>
                                     <txtFileVersion>${project.version}</txtFileVersion>
                                     <internalName>${project.name}</internalName>
-                                    <copyright>© ${inceptionYear} ${organization.name} All Rights Reserved</copyright>
+                                    <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
                                     <originalFilename>${project.build.finalName}.exe</originalFilename>
                                     <productName>${project.name}</productName>
                                     <txtProductVersion>${project.version}</txtProductVersion>

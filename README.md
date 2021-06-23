@@ -24,7 +24,7 @@ The format of this configuration is very similar to the standard WinSW XML forma
         <name>My App</name>
         <description>My App Description</description>
         <executable>java</executable>
-        <arguments>-jar ${build.finalName}.jar</arguments>
+        <arguments>-jar ${project.build.finalName}.jar</arguments>
     </configurationFile>
 ```
 
@@ -71,7 +71,7 @@ As an example, you can use the following
                         <name>${project.name}</name>
                         <description>${project.description}</description>
                         <executable>java</executable>
-                        <arguments>-jar ${build.finalName}.jar</arguments>
+                        <arguments>-jar ${project.build.finalName}.jar</arguments>
                     </configurationFile>
                <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
                     <rcFile>
@@ -80,8 +80,8 @@ As an example, you can use the following
                             <fileVersion>${project.version}</fileVersion>
                             <productVersion>${project.version}</productVersion>
                             <comments>${project.description}</comments>
-                            <companyName>${organization.name}</companyName>
-                            <copyright>© ${inceptionYear} ${organization.name} All Rights Reserved</copyright>
+                            <companyName>${project.organization.name}</companyName>
+                            <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
                         </fileInfo>
                     </rcFile>
                 </configuration>

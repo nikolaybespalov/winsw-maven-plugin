@@ -3,5 +3,5 @@
     <name>My App</name>
     <description>My App Description</description>
     <executable>java</executable>
-    <arguments>-jar ${build.finalName}.jar</arguments>
+    <arguments>-jar ${project.build.finalName}.jar</arguments>
 </service>
