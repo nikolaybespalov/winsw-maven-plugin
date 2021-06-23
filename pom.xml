@@ -78,6 +78,10 @@
 
         <!-- http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#trimStackTrace -->
         <trimStackTrace>false</trimStackTrace>
+
+        <!-- Disable IT too -->
+        <!--suppress UnresolvedMavenProperty -->
+        <invoker.skip>${skipTests}</invoker.skip>
     </properties>
 
     <dependencies>

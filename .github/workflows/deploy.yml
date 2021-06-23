@@ -34,6 +34,5 @@ jobs:
           ./mvnw --batch-mode \
             --file pom.xml \
             -DskipTests \
-            -Dinvoker.skip=true \
             -DskipNexusStagingDeployMojo=false \
             deploy
