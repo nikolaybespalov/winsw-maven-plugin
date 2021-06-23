@@ -9,8 +9,9 @@ Based on https://github.com/avast/pe_tools/blob/master/pe_tools/peresed.py but s
     pyinstaller --onefile peresed.py
 
     # For Windows (Because Windows Defender believes that the file created with PyInstaller/py2exe contains a virus)
-    pip install -U nuitka
-    nuitka --onefile ^
+    "c:\Program Files (x86)\Python\Python38\python.exe" -m pip install -U nuitka
+    "c:\Program Files (x86)\Python\Python38\python.exe" -m nuitka ^
+        --onefile ^
         --standalone ^
         --msvc=14.2 ^
         --follow-imports ^
