@@ -141,7 +141,11 @@ public class WinswMojo extends AbstractMojo {
         if (executableFilePath != null) {
             exeFile = copyExecutableFile();
         } else {
-            exeFile = downloadWinswBinArtifact();
+            try {
+                exeFile = downloadWinswBinArtifact();
+            } catch (IOException e) {
+                throw new MojoExecutionException("Failed to download winsw artifact", e);
+            }
         }
 
         resultExeFile = copyExecutableFile(exeFile);
@@ -209,7 +213,7 @@ public class WinswMojo extends AbstractMojo {
         return copyExecutableFile(executableFilePath);
     }
 
-    private File downloadWinswBinArtifact() throws MojoExecutionException {
+    private File downloadWinswBinArtifact() throws MojoExecutionException, IOException {
         File winswPath = new File(String.format("%s/%s/%s/%s/%s-%s-%s.exe",
                 settings.getLocalRepository(), WINSW_GROUP_ID.replace('.', '/'), WINSW_ARTIFACT_ID, winswVersion, WINSW_ARTIFACT_ID, winswVersion, winswClassifier));
 
@@ -229,6 +233,8 @@ public class WinswMojo extends AbstractMojo {
 
         mavenProject.getRemoteArtifactRepositories().add(winswRepository);
 
+        File tmp = File.createTempFile("winsw", ".exe");
+
         try {
             MojoExecutor.executeMojo(
                     MojoExecutor.plugin(
@@ -242,7 +248,9 @@ public class WinswMojo extends AbstractMojo {
                             MojoExecutor.element(MojoExecutor.name("artifactId"), WINSW_ARTIFACT_ID),
                             MojoExecutor.element(MojoExecutor.name("version"), winswVersion),
                             MojoExecutor.element(MojoExecutor.name("type"), "exe"),
-                            MojoExecutor.element(MojoExecutor.name("classifier"), winswClassifier)
+                            MojoExecutor.element(MojoExecutor.name("classifier"), winswClassifier),
+                            MojoExecutor.element(MojoExecutor.name("outputDirectory"), tmp.getParentFile().getAbsolutePath()),
+                            MojoExecutor.element(MojoExecutor.name("outputFileName"), tmp.getName())
                     ),
                     MojoExecutor.executionEnvironment(
                             mavenProject,
@@ -353,7 +361,7 @@ public class WinswMojo extends AbstractMojo {
         getLog().debug(path.toString());
 
         executeCommand(peresedFile.getAbsolutePath(),
-                "--update-checksum",
+//                "--update-checksum",
                 "--apply",
                 resFile.getAbsolutePath(),
                 "--output",
