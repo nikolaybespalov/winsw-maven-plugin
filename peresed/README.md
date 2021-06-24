@@ -17,7 +17,6 @@ Based on https://github.com/avast/pe_tools/blob/master/pe_tools/peresed.py but s
         --onefile ^
         --standalone ^
         --msvc=14.2 ^
-        --windows-uac-admin ^
         --windows-company-name="Nikolay Bespalov" ^
         --windows-product-name=winsw-maven-plugin ^
         --windows-product-version=0.0.1.0 ^
