@@ -30,6 +30,7 @@ hs_err_pid*
 # Maven Files
 target/
 release.properties
+pom.xml.releaseBackup
 
 # Maven wrapper
 !.mvn/maven-wrapper.jar
