@@ -354,21 +354,34 @@ public class WinswMojo extends AbstractMojo {
     private File mergeResFileAndExeFile(File resFile, File exeFile) throws IOException, InterruptedException {
         getLog().debug("Merging res and exe files");
 
-        File peresedFile = extractFile("peresed");
+        Path winswMerged = Files.createTempFile("winsw-merged", ".exe");
 
-        Path path = Files.createTempFile("winsw-merged", ".exe");
+        getLog().debug(winswMerged.toString());
 
-        getLog().debug(path.toString());
+        if (IS_OS_WINDOWS) {
+            File resourceHackerFile = extractFile("ResourceHacker");
 
-        executeCommand(peresedFile.getAbsolutePath(),
-//                "--update-checksum",
-                "--apply",
-                resFile.getAbsolutePath(),
-                "--output",
-                path.toFile().getAbsolutePath(),
-                exeFile.getAbsolutePath());
+            executeCommand(resourceHackerFile.getAbsolutePath(),
+                    "-open",
+                    exeFile.getAbsolutePath(),
+                    "-save",
+                    winswMerged.toFile().getAbsolutePath(),
+                    "-action",
+                    "addoverwrite",
+                    "-resource",
+                    resFile.getAbsolutePath());
+        } else {
+            File peresedFile = extractFile("peresed");
 
-        return path.toFile();
+            executeCommand(peresedFile.getAbsolutePath(),
+                    "--apply",
+                    resFile.getAbsolutePath(),
+                    "--output",
+                    winswMerged.toFile().getAbsolutePath(),
+                    exeFile.getAbsolutePath());
+        }
+
+        return winswMerged.toFile();
     }
 
     private void executeCommand(String... args) throws IOException, InterruptedException {
