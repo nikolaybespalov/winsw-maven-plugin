@@ -29,6 +29,14 @@ if (SystemUtils.IS_OS_WINDOWS) {
     proc.waitForOrKill(20000)
     assert proc.exitValue() == 0
 
+    def proc3 = (executableFile.getAbsolutePath() + ' start').execute()
+    proc3.waitForOrKill(20000)
+    assert proc3.exitValue() == 0
+
+    def proc4 = (executableFile.getAbsolutePath() + ' stop').execute()
+    proc4.waitForOrKill(20000)
+    assert proc4.exitValue() == 0
+
     def proc2 = (executableFile.getAbsolutePath() + ' uninstall').execute()
     proc2.waitForOrKill(20000)
     assert proc2.exitValue() == 0
