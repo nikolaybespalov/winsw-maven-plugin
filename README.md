@@ -19,28 +19,28 @@ Using the Maven plugin, you specify the WinSW configuration in your POM or use a
 The format of this configuration is very similar to the standard WinSW XML format.
 
 ```xml
-    <configurationFile>
-        <id>myapp</id>
-        <name>My App</name>
-        <description>My App Description</description>
-        <executable>java</executable>
-        <arguments>-jar ${project.build.finalName}.jar</arguments>
-    </configurationFile>
+  <configurationFile>
+    <id>myapp</id>
+    <name>My App</name>
+    <description>My App Description</description>
+    <executable>java</executable>
+    <arguments>-jar ${project.build.finalName}.jar</arguments>
+  </configurationFile>
 ```
 
 WinSW plugin also provides the ability to modify exe file information and add an icon. The plugin supports Linux, macOS and Windows.
 
 ```xml
-    <rcFile>
-        <icon>myapp.ico</icon>
-        <fileInfo>
-            <fileVersion>1.2.3.4</fileVersion>
-            <productVersion>1.2.3.4</productVersion>
-            <comments>My App Description</comments>
-            <companyName>John Doe</companyName>
-            <copyright>© 2019 John Doe All Rights Reserved</copyright>
-        </fileInfo>
-    </rcFile>
+  <rcFile>
+    <icon>myapp.ico</icon>
+    <fileInfo>
+      <fileVersion>1.2.3.4</fileVersion>
+      <productVersion>1.2.3.4</productVersion>
+      <comments>My App Description</comments>
+      <companyName>John Doe</companyName>
+      <copyright>© 2019 John Doe All Rights Reserved</copyright>
+    </fileInfo>
+  </rcFile>
 ```
 
 ## Example
@@ -48,46 +48,62 @@ WinSW plugin also provides the ability to modify exe file information and add an
 As an example, you can use the following
 
 ```xml
-    <plugin>
-        <groupId>com.github.nikolaybespalov</groupId>
-        <artifactId>winsw-maven-plugin</artifactId>
-        <version>${winsw.maven.plugin.version}</version>
-        <executions>
-            <execution>
-                <id>process-winsw-stuff</id>
-                <phase>prepare-package</phase>
-                <goals>
-                    <goal>winsw</goal>
-                </goals>
-                <configuration>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                    <winswVersion>2.9.0</winswVersion>
-               <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
-               <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
-                    <executableFileName>${project.build.finalName}.exe</executableFileName>
-                    <configurationFileName>${project.build.finalName}.xml</configurationFileName>
-                    <configurationFile>
-                        <id>${project.artifactId}</id>
-                        <name>${project.name}</name>
-                        <description>${project.description}</description>
-                        <executable>java</executable>
-                        <arguments>-jar ${project.build.finalName}.jar</arguments>
-                    </configurationFile>
-               <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
-                    <rcFile>
-                        <icon>${project.basedir}/${project.name}.ico</icon>
-                        <fileInfo>
-                            <fileVersion>${project.version}</fileVersion>
-                            <productVersion>${project.version}</productVersion>
-                            <comments>${project.description}</comments>
-                            <companyName>${project.organization.name}</companyName>
-                            <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
-                        </fileInfo>
-                    </rcFile>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
+  <plugin>
+    <groupId>com.github.nikolaybespalov</groupId>
+      <artifactId>winsw-maven-plugin</artifactId>
+      <version>${winsw.maven.plugin.version}</version>
+      <executions>
+        <execution>
+          <id>process-winsw-stuff</id>
+          <phase>prepare-package</phase>
+          <goals>
+            <goal>winsw</goal>
+          </goals>
+          <configuration>
+            <outputDirectory>${project.build.directory}</outputDirectory>
+            <winswVersion>2.9.0</winswVersion>
+       <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
+       <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
+            <executableFileName>${project.build.finalName}.exe</executableFileName>
+            <configurationFileName>${project.build.finalName}.xml</configurationFileName>
+            <configurationFile>
+              <id>${project.artifactId}</id>
+              <name>${project.name}</name>
+              <description>${project.description}</description>
+              <executable>java</executable>
+              <arguments>-jar ${project.build.finalName}.jar</arguments>
+            </configurationFile>
+       <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
+            <rcFile>
+              <icon>${project.basedir}/${project.name}.ico</icon>
+              <fileInfo>
+                <fileVersion>${project.version}</fileVersion>
+                <productVersion>${project.version}</productVersion>
+                <comments>${project.description}</comments>
+                <companyName>${project.organization.name}</companyName>
+                <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
+              </fileInfo>
+            </rcFile>
+          </configuration>
+        </execution>
+      </executions>
+  </plugin>
+```
+
+Don't forget about MainClass
+
+```xml
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+      <archive>
+        <manifest>
+          <mainClass>HelloWorld</mainClass>
+        </manifest>
+      </archive>
+    </configuration>
+  </plugin>
 ```
 
 If you have any questions, please register a ticket!
