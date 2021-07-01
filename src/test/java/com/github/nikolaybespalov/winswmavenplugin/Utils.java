@@ -74,6 +74,8 @@ public class Utils {
     public static Process execute(File executableFile, String command) throws IOException, InterruptedException {
         Process p = new ProcessBuilder(executableFile.getAbsolutePath(), command).start();
 
+        Thread.sleep(1000);
+
         p.waitFor();
 
         String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
