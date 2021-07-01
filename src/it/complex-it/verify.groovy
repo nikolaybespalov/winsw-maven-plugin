@@ -1,8 +1,9 @@
 import org.apache.commons.lang3.SystemUtils
 
-import static com.github.nikolaybespalov.winswmavenplugin.Utils.execute
-import static com.github.nikolaybespalov.winswmavenplugin.Utils.getFileInfoValue
-import static com.github.nikolaybespalov.winswmavenplugin.Utils.getXmlValue
+import java.nio.charset.StandardCharsets
+
+import static com.github.nikolaybespalov.winswmavenplugin.Utils.*
+import static org.apache.commons.io.FileUtils.readFileToString
 
 //noinspection GroovyAssignabilityCheck
 File executableFile = new File(basedir, 'target/complex-it-1.0-SNAPSHOT.exe')
@@ -23,6 +24,10 @@ if (SystemUtils.IS_OS_WINDOWS) {
 
     assert execute(executableFile, 'install').exitValue() == 0
     assert execute(executableFile, 'start').exitValue() == 0
+
+    Thread.sleep(1000)
+    assert "Hello, World!" + System.lineSeparator() == readFileToString(new File(basedir, 'target/complex-it-1.0-SNAPSHOT.out.log'), StandardCharsets.UTF_8)
+
     assert execute(executableFile, 'stop').exitValue() == 0
     assert execute(executableFile, 'uninstall').exitValue() == 0
 }

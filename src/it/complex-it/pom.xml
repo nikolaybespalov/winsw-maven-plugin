@@ -22,6 +22,17 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>HelloWorld</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>@project.groupId@</groupId>
                 <artifactId>@project.artifactId@</artifactId>
                 <version>@project.version@</version>
