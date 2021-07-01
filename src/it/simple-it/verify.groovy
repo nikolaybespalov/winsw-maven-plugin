@@ -1,3 +1,4 @@
+//noinspection GroovyAssignabilityCheck
 File executableFile = new File(basedir, 'target/simple-it-1.0-SNAPSHOT.exe')
 
 assert executableFile.exists()
