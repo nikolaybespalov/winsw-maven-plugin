@@ -50,43 +50,43 @@ As an example, you can use the following
 ```xml
   <plugin>
     <groupId>com.github.nikolaybespalov</groupId>
-      <artifactId>winsw-maven-plugin</artifactId>
-      <version>${winsw.maven.plugin.version}</version>
-      <executions>
-        <execution>
-          <id>process-winsw-stuff</id>
-          <phase>prepare-package</phase>
-          <goals>
-            <goal>winsw</goal>
-          </goals>
-          <configuration>
-            <outputDirectory>${project.build.directory}</outputDirectory>
-            <winswVersion>2.9.0</winswVersion>
-       <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
-       <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
-            <executableFileName>${project.build.finalName}.exe</executableFileName>
-            <configurationFileName>${project.build.finalName}.xml</configurationFileName>
-            <configurationFile>
-              <id>${project.artifactId}</id>
-              <name>${project.name}</name>
-              <description>${project.description}</description>
-              <executable>java</executable>
-              <arguments>-jar ${project.build.finalName}.jar</arguments>
-            </configurationFile>
-       <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
-            <rcFile>
-              <icon>${project.basedir}/${project.name}.ico</icon>
-              <fileInfo>
-                <fileVersion>${project.version}</fileVersion>
-                <productVersion>${project.version}</productVersion>
-                <comments>${project.description}</comments>
-                <companyName>${project.organization.name}</companyName>
-                <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
-              </fileInfo>
-            </rcFile>
-          </configuration>
-        </execution>
-      </executions>
+    <artifactId>winsw-maven-plugin</artifactId>
+    <version>${winsw.maven.plugin.version}</version>
+    <executions>
+      <execution>
+        <id>process-winsw-stuff</id>
+        <phase>prepare-package</phase>
+        <goals>
+          <goal>winsw</goal>
+        </goals>
+        <configuration>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+          <winswVersion>2.9.0</winswVersion>
+     <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
+     <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
+          <executableFileName>${project.build.finalName}.exe</executableFileName>
+          <configurationFileName>${project.build.finalName}.xml</configurationFileName>
+          <configurationFile>
+            <id>${project.artifactId}</id>
+            <name>${project.name}</name>
+            <description>${project.description}</description>
+            <executable>java</executable>
+            <arguments>-jar ${project.build.finalName}.jar</arguments>
+          </configurationFile>
+     <!-- <configurationFilePath>...</configurationFilePath>, If WinSW Configuration File already exists -->
+          <rcFile>
+            <icon>${project.basedir}/${project.name}.ico</icon>
+            <fileInfo>
+              <fileVersion>${project.version}</fileVersion>
+              <productVersion>${project.version}</productVersion>
+              <comments>${project.description}</comments>
+              <companyName>${project.organization.name}</companyName>
+              <copyright>© ${project.inceptionYear} ${project.organization.name} All Rights Reserved</copyright>
+            </fileInfo>
+          </rcFile>
+        </configuration>
+      </execution>
+    </executions>
   </plugin>
 ```
 
