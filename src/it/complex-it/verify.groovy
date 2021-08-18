@@ -26,10 +26,13 @@ if (SystemUtils.IS_OS_WINDOWS) {
     assert execute(executableFile, 'start').exitValue() == 0
 
     Thread.sleep(1000)
-    assert "Hello, World!" + System.lineSeparator() == readFileToString(new File(basedir, 'target/complex-it-1.0-SNAPSHOT.out.log'), StandardCharsets.UTF_8)
 
-    assert execute(executableFile, 'stop').exitValue() == 0
-    assert execute(executableFile, 'uninstall').exitValue() == 0
+    try {
+        assert "Hello, World!" + System.lineSeparator() == readFileToString(new File(basedir, 'target/complex-it-1.0-SNAPSHOT.out.log'), StandardCharsets.UTF_8)
+    } finally {
+        assert execute(executableFile, 'stop').exitValue() == 0
+        assert execute(executableFile, 'uninstall').exitValue() == 0
+    }
 }
 
 File configurationFile = new File(basedir, 'target/complex-it-1.0-SNAPSHOT.xml')
