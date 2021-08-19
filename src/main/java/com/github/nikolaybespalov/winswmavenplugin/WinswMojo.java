@@ -24,7 +24,6 @@ import org.apache.maven.settings.Settings;
 import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -231,10 +230,7 @@ public class WinswMojo extends AbstractMojo {
             return winswPath;
         }
 
-        URL remoteWinswRepoUrl = new URL(WINSW_ARTIFACT_REPO);
-        HttpURLConnection huc = (HttpURLConnection) remoteWinswRepoUrl.openConnection();
-
-        if (winswRepo.equals(WINSW_REPO_JAR) || huc.getResponseCode() != HttpURLConnection.HTTP_OK) {
+        if (winswRepo.equals(WINSW_REPO_JAR)) {
             getLog().debug("Extracting WinSW repo");
 
             File localWinswRepoPath = new File(outputDirectory, WINSW_LOCAL_REPO_NAME);
@@ -255,7 +251,7 @@ public class WinswMojo extends AbstractMojo {
         } else {
             getLog().debug("Downloading winsw.exe file");
 
-            downloadWinswBinArtifactFromRepo(remoteWinswRepoUrl.toString());
+            downloadWinswBinArtifactFromRepo(winswRepo);
         }
 
         return winswPath;
