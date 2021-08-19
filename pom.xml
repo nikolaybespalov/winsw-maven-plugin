@@ -183,6 +183,11 @@
                 <filtering>false</filtering>
                 <targetPath>bin</targetPath>
             </resource>
+            <resource>
+                <directory>src/main/resources/repository</directory>
+                <filtering>false</filtering>
+                <targetPath>repository</targetPath>
+            </resource>
         </resources>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>

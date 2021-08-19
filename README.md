@@ -61,7 +61,8 @@ As an example, you can use the following
         </goals>
         <configuration>
           <outputDirectory>${project.build.directory}</outputDirectory>
-          <winswVersion>2.9.0</winswVersion>
+     <!-- <winswRepo>jar</winswRepo>, if 'https://repo.jenkins-ci.org/releases/' is unreachable -->
+            <winswVersion>2.9.0</winswVersion>
      <!-- <winswClassifier>net4</winswClassifier>, 'bin' by default -->
      <!-- <executableFilePath>...</executableFilePath>, If executable file already exists -->
           <executableFileName>${project.build.finalName}.exe</executableFileName>

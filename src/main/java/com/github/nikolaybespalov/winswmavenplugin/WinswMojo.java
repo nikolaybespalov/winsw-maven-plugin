@@ -24,6 +24,8 @@ import org.apache.maven.settings.Settings;
 import org.twdata.maven.mojoexecutor.MojoExecutor;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +40,8 @@ public class WinswMojo extends AbstractMojo {
     public static final String WINSW_ARTIFACT_REPO = "https://repo.jenkins-ci.org/releases/";
     public static final String WINSW_GROUP_ID = "com.sun.winsw";
     public static final String WINSW_ARTIFACT_ID = "winsw";
+    public static final String WINSW_LOCAL_REPO_NAME = "winsw-repository";
+    public static final String WINSW_REPO_JAR = "jar";
 
     @Parameter(defaultValue = "${project}", readonly = true)
     @SuppressWarnings("unused")
@@ -57,6 +61,10 @@ public class WinswMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.directory}", required = true)
     @SuppressWarnings("unused")
     private File outputDirectory;
+
+    @Parameter(defaultValue = WINSW_ARTIFACT_REPO)
+    @SuppressWarnings("unused")
+    private String winswRepo;
 
     @Parameter(defaultValue = "2.9.0")
     @SuppressWarnings("unused")
@@ -223,10 +231,42 @@ public class WinswMojo extends AbstractMojo {
             return winswPath;
         }
 
-        getLog().debug("Downloading winsw.exe file");
+        URL remoteWinswRepoUrl = new URL(WINSW_ARTIFACT_REPO);
+        HttpURLConnection huc = (HttpURLConnection) remoteWinswRepoUrl.openConnection();
+
+        if (winswRepo.equals(WINSW_REPO_JAR) || huc.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            getLog().debug("Extracting WinSW repo");
+
+            File localWinswRepoPath = new File(outputDirectory, WINSW_LOCAL_REPO_NAME);
+
+            if (!localWinswRepoPath.mkdirs()) {
+                throw new IOException("Could not create " + WINSW_LOCAL_REPO_NAME);
+            }
+
+            URL repositoryUrl = super.getClass().getResource("/repository");
+
+            assert repositoryUrl != null;
+
+            Utils.copyResourcesRecursively(repositoryUrl, localWinswRepoPath);
+
+            getLog().debug("Downloading winsw.exe file");
+
+            downloadWinswBinArtifactFromRepo("file://" + localWinswRepoPath);
+        } else {
+            getLog().debug("Downloading winsw.exe file");
+
+            downloadWinswBinArtifactFromRepo(remoteWinswRepoUrl.toString());
+        }
+
+        return winswPath;
+    }
+
+    private void downloadWinswBinArtifactFromRepo(String artifactRepo) throws MojoExecutionException, IOException {
+        getLog().debug("ARTIFACT_REPO: " + artifactRepo);
+
 
         ArtifactRepository winswRepository = new MavenArtifactRepository("winsw",
-                WINSW_ARTIFACT_REPO,
+                artifactRepo,
                 new DefaultRepositoryLayout(),
                 new ArtifactRepositoryPolicy(false, "never", "fail"),
                 new ArtifactRepositoryPolicy(true, "never", "fail"));
@@ -261,8 +301,6 @@ public class WinswMojo extends AbstractMojo {
         } finally {
             mavenProject.getRemoteArtifactRepositories().remove(winswRepository);
         }
-
-        return winswPath;
     }
 
     private File extractFile(String name) throws IOException {
