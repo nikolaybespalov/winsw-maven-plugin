@@ -42,7 +42,7 @@ jobs:
         run: ${{ matrix.mvnw }} --batch-mode verify
 
       - name: Upload JaCoCo report
-        uses: 'actions/upload-artifact@v2'
+        uses: 'actions/upload-artifact@v3'
         with:
           name: jacoco-${{ matrix.os }}
           path: target/site/jacoco-merged-test-coverage-report/jacoco.xml
