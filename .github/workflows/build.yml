@@ -15,8 +15,6 @@ jobs:
       matrix:
         os: [ windows-2019, windows-2022, ubuntu-18.04, ubuntu-20.04, macos-11, macos-12 ]
         include:
-          - os: windows-2016
-            mvnw: .\mvnw.cmd
           - os: windows-2019
             mvnw: .\mvnw.cmd
           - os: windows-2022
@@ -25,7 +23,9 @@ jobs:
             mvnw: ./mvnw
           - os: ubuntu-20.04
             mvnw: ./mvnw
-          - os: macos-10.15
+          - os: macos-11
+            mvnw: ./mvnw
+          - os: macos-12
             mvnw: ./mvnw
 
     runs-on: ${{ matrix.os }}
@@ -64,4 +64,4 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: jacoco-windows-2016/jacoco.xml, jacoco-windows-2019/jacoco.xml, jacoco-windows-2022/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-10.15/jacoco.xml
+          coverage-reports: jacoco-windows-2019/jacoco.xml, jacoco-windows-2022/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-11/jacoco.xml, jacoco-macos-12/jacoco.xml
