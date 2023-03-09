@@ -25,7 +25,7 @@ if (SystemUtils.IS_OS_WINDOWS) {
     assert execute(executableFile, 'install').exitValue() == 0
     assert execute(executableFile, 'start').exitValue() == 0
 
-    Thread.sleep(1000)
+    Thread.sleep(5000)
 
     try {
         assert "Hello, World!" + System.lineSeparator() == readFileToString(new File(basedir, 'target/complex-it-1.0-SNAPSHOT.out.log'), StandardCharsets.UTF_8)
