@@ -19,6 +19,8 @@ jobs:
             mvnw: .\mvnw.cmd
           - os: windows-2019
             mvnw: .\mvnw.cmd
+          - os: windows-2022
+            mvnw: .\mvnw.cmd
           - os: ubuntu-18.04
             mvnw: ./mvnw
           - os: ubuntu-20.04
