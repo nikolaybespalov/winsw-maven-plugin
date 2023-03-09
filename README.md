@@ -30,9 +30,11 @@ The format of this configuration is very similar to the standard WinSW XML forma
 
 WinSW plugin also provides the ability to modify exe file information and add an icon. The plugin supports Linux, macOS and Windows.
 
+![](myapp.exe-properties.png)
+
 ```xml
   <rcFile>
-    <icon>myapp.ico</icon>
+    <icon>${project.basedir}/myapp.ico</icon>
     <fileInfo>
       <fileVersion>1.2.3.4</fileVersion>
       <productVersion>1.2.3.4</productVersion>
