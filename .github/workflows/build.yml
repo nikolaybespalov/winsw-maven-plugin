@@ -62,4 +62,4 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: jacoco-windows-2016/jacoco.xml, jacoco-windows-2019/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-10.15/jacoco.xml
+          coverage-reports: jacoco-windows-2016/jacoco.xml, jacoco-windows-2019/jacoco.xml, jacoco-windows-2022/jacoco.xml, jacoco-ubuntu-18.04/jacoco.xml, jacoco-ubuntu-20.04/jacoco.xml, jacoco-macos-10.15/jacoco.xml
